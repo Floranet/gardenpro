@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat List</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #c9f0cc; /* Light green background to give a fresh garden vibe */
+            color: #3b4d2e; /* Dark green text for a natural look */
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 2.5rem;
+            color: #2a3d1d; /* Darker green for the main title */
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+        .user-list {
+            margin: 20px;
+            width: 45%;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-image: url('https://www.transparenttextures.com/patterns/wood-skin.png'); /* Subtle wood texture */
+            background-size: cover;
+        }
+        .user-list h2 {
+            font-size: 1.8rem;
+            color: #5b8a3c; /* Lighter green color for the subheadings */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .user {
+            padding: 12px;
+            background-color: #f4f7d2; /* Light green background for each user */
+            border-radius: 10px;
+            margin-bottom: 12px;
+            transition: transform 0.3s ease;
+        }
+        .user:hover {
+            transform: translateY(-5px); /* Subtle hover effect to give the feeling of a flower rising */
+            background-color: #c3d9a5; /* Slightly darker green when hovered */
+        }
+        .user a {
+            text-decoration: none;
+            color: #336e3b; /* Deep green color for the links */
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .user a:hover {
+            color: #1d4b2c; /* Darker shade for hover state */
+            text-decoration: underline;
+        }
+        .user-list::before {
+            content: '🌿';
+            font-size: 2rem;
+            display: block;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .navbar-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px; /* Adjust spacing between links */
+        padding: 15px 0;
+        background-color: #c9f0cc; /* Light background for header */
+    }
+
+    .navbar-nav .nav-link {
+        color: #23653a !important; /* Ensures all links are green */
+        font-weight: 600;
+        text-transform: uppercase;
+        padding: 10px 15px;
+        transition: color 0.3s ease-in-out;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: green !important;
+    }
+
+    </style>
+</head>
+<body>
+    <header class="header_section">
+        <nav>
+            <div class="navbar-nav">
+                                  {% if request.session.email %}
+                      <a  class="nav-link" href="/profhome/">Home</a>|
+                    {% else %}
+                      <a  class="nav-link" href="/userHome/">Home</a>|
+                    {% endif %}
+                        <a class="nav-link" href="/community/">Back to Community</a> 
+            
+              </div>
+            </div>
+        </nav>
+    </header>
+    <h1>Chat Room</h1>
+
+    <div class="container">
+        <div class="user-list">
+            <h2>Our Gardeners</h2>
+            {% for artist in artists %}
+                <div class="user">
+                    <a href="{% url 'chat_detail' 'artist' artist.first_name %}">{{ artist.first_name }}</a>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="user-list">
+            <h2>Our Professionals</h2>
+            {% for buyer in buyers %}
+                <div class="user">
+                    <a href="{% url 'chat_detail' 'buyer' buyer.fname %}">{{ buyer.fname }}</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>

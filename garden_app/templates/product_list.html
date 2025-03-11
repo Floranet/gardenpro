@@ -1,0 +1,81 @@
+{% extends 'admin_dash.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <style>
+        body {
+            background-color: #c9f0cc;
+            font-family: Arial, sans-serif;
+            display: block;
+        }
+        h2 {
+            text-align: center;
+            font-style: italic;
+        }
+        table {
+            border: 1px dotted black;
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #f0f0f0;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #dcdcdc;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #e9e9e9;
+        }
+        tbody tr:hover {
+            background-color: #d1f0ff;
+        }
+        .delete-link {
+            color: red;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h2>Products</h2>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Product No.</th>
+                <th scope="col">Product Image</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Products Type</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+                <th scope="col">Seller</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for p in prod %}
+        <tr>
+            <td>{{ p.id }}</td>
+            <td> <img src="{{p.img.url}}" width="100" height="100"></td>
+            <td>{{ p.prod_name }}</td>
+            <td>{{ p.prod_type }}</td>
+            <td>{{ p.quantity }}</td>
+            <td>{{ p.price }}</td>
+            <td>{{ p.seller_name }}</td>
+            <td>{{ p.seller_phone }}</td>
+            <td><a class="delete-link" href="/delete_prod/{{ p.id }}">Delete</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+{% endblock %}

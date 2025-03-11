@@ -1,0 +1,671 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<style>
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px; /* Adjust spacing between links */
+}
+
+.navbar-nav .nav-link {
+  color: #23653a !important; /* Ensures all links are black */
+  font-weight: 600; /* Slightly bold for better visibility */
+  text-transform: uppercase; /* Consistent styling */
+  padding: 10px 15px; /* Proper padding */
+  transition: color 0.3s ease-in-out; /* Smooth color change */
+}
+
+.navbar-nav .nav-link:hover {
+  color: green !important; /* Highlight effect */
+}
+
+.navbar-nav .nav-link:last-child {
+  color: #23653a !important; /* Ensures "Log Out" is not blue */
+}
+
+.slider_section {
+  display: flex;
+  align-items: center; /* Centers content vertically */
+  justify-content: center;
+  min-height: 100vh; /* Ensures full viewport height */
+  padding: 50px 0; /* Adds spacing without breaking layout */
+}
+
+.detail-box {
+  text-align: left; /* Ensures text is properly aligned */
+}
+
+.img-box img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+</style>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>FloraNet</title>
+
+  <!-- slider stylesheet -->
+  <link rel="stylesheet" type="text/css"
+    href="{% static 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css' %}" />
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+
+  <!-- fonts style -->
+  <link href="{% static 'https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,700&display=swap' %}" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+  
+</head>
+
+<body>
+  <div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container">
+          <!-- <a class="navbar-brand" href="index.html">
+            <img src="{% static 'images/Logo.png' %}" alt="" />
+          </a> -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" >
+            <ul class="navbar-nav  ">
+              <li class="nav-item active">
+               
+                 <div class="collapse navbar-collapse" >
+            <ul class="navbar-nav  ">
+              <li class="nav-item active">
+                <a class="nav-link" href="/adminhome/">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/admin_dash/">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/user_shoplist/">View Shops </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/user_prod/">Shop </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/community/">Community</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/edu/">Resources</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/tools/">Management</a>
+              </li>
+            </ul>
+            
+          </div>
+              </li>
+             
+              
+            
+          </div>
+          <div>
+            <div class="custom_menu-btn ">
+              <button>
+                <span class=" s-1">
+
+                </span>
+                <span class="s-2">
+
+                </span>
+                <span class="s-3">
+
+                </span>
+              </button>
+            </div>
+          </div>
+
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+    <!-- slider section -->
+    <section class="slider_section header-background">
+      
+      <div class="container">
+       
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="detail-box">
+                    <h1><b>FloraNet</b></h1>
+                    <p>
+                      Discover, connect, and grow with fellow garden enthusiasts. 
+                      Whether you're a beginner or a seasoned gardener, 
+                      our community offers everything you need—from expert advice to a thriving marketplace and helpful resources.
+                    </p>
+                    <div class="btn-box">
+                      <a href="#about-us" class="btn-1">
+                        Read More
+                      </a>
+                      <!-- <a href="" class="btn-2">
+                        Contact us
+                      </a> -->
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 img-container">
+                  <div class="img-box">
+                    <img src="{% static 'images/1.png' %}" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            </div>
+          <!-- </div> -->
+        </div>
+      </div>
+    </section>
+    <!-- end slider section -->
+  </div>
+
+
+    <!-- end header section -->
+
+  <!-- about section -->
+  <section id="about-us">
+  <section class="about_section layout_padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="detail-box">
+            <div class="heading_container">
+              <h2>
+                About Us
+              </h2>
+
+            </div>
+            <p>
+              Welcome to FloraNet, your ultimate destination for all things gardening! Our mission is to cultivate a vibrant community where garden lovers, experts, and businesses come together to share knowledge, shop for quality gardening products, and connect with like-minded enthusiasts.
+
+Whether you're a beginner taking your first steps in gardening or a seasoned expert looking to expand your skills, FloraNet provides a space for you to learn, grow, and engage. From expert gardening tips and video tutorials to a marketplace filled with plants, tools, and supplies, we have everything you need to nurture your passion.
+<br>
+🌿 What We Offer:<br>
+✔️ Expert Guidance – Learn from experienced gardeners and professionals.<br>
+✔️ Community Support – Share your experiences, ask questions, and connect with fellow gardeners.<br>
+✔️ Gardening Marketplace – Browse and purchase high-quality gardening tools, seeds, and plants.<br>
+✔️ Management – Stay organized with personalized gardening schedules.<br>
+
+At FloraNet, we believe that gardening is more than just a hobby—it’s a way to create beauty, promote sustainability, and connect with nature.<br> Join us today and be part of a community that helps your garden flourish!
+
+<br>🌱 Grow. Connect. Inspire. 🌱
+
+
+            </p>
+            <!-- <a href="">
+              Read More
+            </a> -->
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="img-box">
+            <img src="{% static 'images/about-img.png' %}" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </section>
+  <!-- end about section -->
+
+ <!-- trending section -->
+
+ <section class="trending_section layout_padding">
+  <div id="accordion">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="detail-box">
+            <div class="heading_container">
+              <h2>
+                Trending Categories
+              </h2>
+            </div>
+            <div class="tab_container">
+              <div class="t-link-box" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                aria-controls="collapseOne">
+                <div class="number">
+                  <h5>
+                    01
+                  </h5>
+                </div>
+                <hr>
+                <div class="t-name">
+                  <h5>
+                   Profesional Consultation
+                  </h5>
+                </div>
+              </div>
+              <div class="t-link-box collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                aria-expanded="false" aria-controls="collapseTwo">
+                <div class="number">
+                  <h5>
+                    02
+                  </h5>
+                </div>
+                <hr>
+                <div class="t-name">
+                  <h5>
+                    Products
+                  </h5>
+                </div>
+              </div>
+              <div class="t-link-box collapsed" data-toggle="collapse" data-target="#collapseThree"
+                aria-expanded="false" aria-controls="collapseThree">
+                <div class="number">
+                  <h5>
+                    03
+                  </h5>
+                </div>
+                <hr>
+                <div class="t-name">
+                  <h5>
+                    Shops
+                  </h5>
+                </div>
+              </div>
+              <div class="t-link-box collapsed" data-toggle="collapse" data-target="#collapseFour"
+                aria-expanded="false" aria-controls="collapseFour">
+                <div class="number">
+                  <h5>
+                    04
+                  </h5>
+                </div>
+                <hr>
+                <div class="t-name">
+                  <h5>
+                    Chatroom
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="collapse show" id="collapseOne" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="img_container ">
+              <div class="box b-1">
+                <div class="img-box">
+                  <img src="{% static 'images/t-1.jpg' %}" alt="">
+                </div>
+                <div class="img-box">
+                  <img src="{% static 'images/t-2.jpg' %}" alt="">
+                </div>
+              </div>
+              <div class="box b-2">
+                <div class="img-box">
+                  <img src="{% static 'images/t-3.jpg' %}" alt="">
+                </div>
+                <div class="img-box">
+                  <img src="{% static 'images/t-4.jpg' %}" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="collapse" id="collapseTwo" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="img_container ">
+              <div class="box b-1">
+                <div class="img-box">
+                  <img src="{% static 'images/t-3.jpg' %}" alt="">
+                </div>
+                <div class="img-box">
+                  <img src="{% static 'images/t-4.jpg' %}" alt="">
+                </div>
+              </div>
+              <div class="box b-2">
+
+                <div class="img-box">
+                  <img src="{% static 'images/t-1.jpg' %}" alt="">
+                </div>
+                <div class="img-box">
+                  <img src="{% static 'images/t-2.jpg' %}" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="collapse" id="collapseThree" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="img_container ">
+              <div class="box b-1">
+                <div class="img-box">
+                  <img src="{% static 'images/t-4.jpg' %}" alt="">
+                </div>
+                <div class="img-box">
+                  <img src="{% static 'images/t-1.jpg' %}" alt="">
+                </div>
+              </div>
+              <div class="box b-2">
+                <div class="img-box">
+                  <img src="{% static 'images/t-3.jpg' %}" alt="">
+                </div>
+                <div class="img-box">
+                  <img src="{% static 'images/t-2.jpg' %}" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="collapse" id="collapseFour" aria-labelledby="headingfour" data-parent="#accordion">
+            <div class="img_container ">
+              <div class="box b-1">
+                <div class="img-box">
+                  <img src="{% static 'images/t-1.jpg' %}" alt="">
+                </div>
+
+                <div class="img-box">
+                  <img src="{% static 'images/t-4.jpg' %}" alt="">
+                </div>
+              </div>
+              <div class="box b-2">
+                <div class="img-box">
+                  <img src="{% static 'images/t-3.jpg' %}" alt="">
+                </div>
+                <div class="img-box">
+                  <img src="{% static 'images/t-2.jpg' %}" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- end trending section -->
+
+
+
+
+<!-- end discount section -->
+
+<!-- brand section -->
+
+<section class="brand_section">
+  <div class="container">
+    <div class="heading_container">
+      <h2>
+        Products
+      </h2>
+    </div>
+    <div class="brand_container layout_padding2">
+      <div class="box">
+        <a href="">
+          <div class="img-box">
+            <img src="{% static 'images/slider-img.png' %}" alt="">
+          </div>
+        </a>
+      </div>
+      <div class="box">
+        <a href="">
+          <div class="img-box">
+            <img src="{% static 'images/slider-img.png' %}" alt="">
+          </div>
+        </a>
+      </div>
+      <div class="box">
+        <a href="">
+          <div class="img-box">
+            <img src="{% static 'images/slider-img.png' %}" alt="">
+          </div>
+        </a>
+      </div>
+      <div class="box">
+        <a href="">
+          <div class="img-box">
+            <img src="{% static 'images/slider-img.png' %}" alt="">
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- end brand section -->
+<!-- contact section -->
+
+<section class="contact_section layout_padding">
+  <div class="container ">
+    <div class="heading_container">
+      <h2 class="">
+        Contact Us
+      </h2>
+    </div>
+
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+If you have any queries or feedback, please send it to us.</p><br>
+  <form action="/contact" method="POST">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required><br><br>
+
+    <label for="message">Message:</label><br>
+    <textarea id="message" name="message" rows="4" required></textarea><br><br>
+
+    <button type="submit">Submit</button>
+  </form>
+  <br>
+      </div></div></div>
+ 
+
+<!-- end contact section -->
+
+
+  <!-- info section -->
+  <section class="info_section layout_padding2">
+    <div class="container">
+      <div class="info_logo">
+        <h2>
+        FloraNet
+        </h2>
+      </div>
+      <div class="row">
+
+        <div class="col-md-3">
+          <div class="info_contact">
+            <h5>
+              About Shop
+            </h5>
+            <div>
+              <div class="img-box">
+                <img src="{% static 'images/location-white.png' %}" width="18px" alt="">
+              </div>
+              <p>
+                Address
+              </p>
+            </div>
+            <div>
+              <div class="img-box">
+                <img src="{% static 'images/telephone-white.png' %}" width="12px" alt="">
+              </div>
+              <p>
+                +01 1234567890
+              </p>
+            </div>
+            <div>
+              <div class="img-box">
+                <img src="{% static 'images/envelope-white.png' %}" width="18px" alt="">
+              </div>
+              <p>
+                demo@gmail.com
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="info_info">
+            <h5>
+              Informations
+            </h5>
+            <p>
+              ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="info_insta">
+            <h5>
+              Instagram
+            </h5>
+            <div class="insta_container">
+              <div>
+                <a href="">
+                  <div class="insta-box b-1">
+                    <img src="{% static 'images/i-1.jpg' %}" alt="">
+                  </div>
+                </a>
+                <a href="">
+                  <div class="insta-box b-2">
+                    <img src="{% static 'images/i-2.jpg' %}" alt="">
+                  </div>
+                </a>
+              </div>
+
+              <div>
+                <a href="">
+                  <div class="insta-box b-3">
+                    <img src="{% static 'images/i-3.jpg' %}" alt="">
+                  </div>
+                </a>
+                <a href="">
+                  <div class="insta-box b-4">
+                    <img src="{% static 'images/i-4.jpg' %}" alt="">
+                  </div>
+                </a>
+              </div>
+              <div>
+                <a href="">
+                  <div class="insta-box b-3">
+                    <img src="{% static 'images/i-5.jpg' %}" alt="">
+                  </div>
+                </a>
+                <a href="">
+                  <div class="insta-box b-4">
+                    <img src="{% static 'images/i-6.jpg' %}" alt="">
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="info_form ">
+            <h5>
+              Newsletter
+            </h5>
+            <form action="">
+              <input type="email" placeholder="Enter your email">
+              <button>
+                Subscribe
+              </button>
+            </form>
+            <div class="social_box">
+              <a href="">
+                <img src="{% static 'images/fb.png' %}" alt="">
+              </a>
+              <a href="">
+                <img src="{% static 'images/twitter.png' %}" alt="">
+              </a>
+              <a href="">
+                <img src="{% static 'images/linkedin.png' %}" alt="">
+              </a>
+              <a href="">
+                <img src="{% static 'images/youtube.png' %}" alt="">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end info_section -->
+
+
+  <!-- footer section -->
+  <section class="container-fluid footer_section ">
+    <div class="container">
+      <p>
+        &copy; 2019 All Rights Reserved By
+        <a href="{% static 'https://html.design/' %}">Free Html Templates</a>
+      </p>
+    </div>
+  </section>
+  <!-- end  footer section -->
+
+
+  <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+  <script type="text/javascript" src="{% static 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js' %}">
+  </script>
+  <script type="text/javascript">
+    $(".owl-carousel").owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: true,
+      navText: [],
+      autoplay: true,
+      autoplayHoverPause: true,
+      responsive: {
+        0: {
+          items: 1
+        },
+        420: {
+          items: 2
+        },
+        1000: {
+          items: 5
+        }
+      }
+
+    });
+  </script>
+  <script>
+    
+  </script>
+  <script>
+    $('.carousel').on('slid.bs.carousel', function () {
+      $(".indicator-2 li").removeClass("active");
+      indicators = $(".carousel-indicators li.active").data("slide-to");
+      a = $(".indicator-2").find("[data-slide-to='" + indicators + "']").addClass("active");
+      console.log(indicators);
+
+    })
+  </script>
+
+</body>
+</body>
+
+</html>

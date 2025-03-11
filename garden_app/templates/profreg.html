@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garden Community Register</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            /* Updated background image to a garden theme */
+            background-image: url('https://tint.creativemarket.com/rg-TJA0ffTni5nY0wQqfozIvJonqc5-rdaqcj5oEx1Q/width:1820/height:778/gravity:ce/rt:fill-down/el:1/czM6Ly9maWxlcy5jcmVhdGl2ZW1hcmtldC5jb20vaW1hZ2VzL3NjcmVlbnNob3RzL3Byb2R1Y3RzLzM1Ny8zNTc5LzM1Nzk1NjkvbXpzd2dpMG5nZWhiZXQ2YzdtdWpxY3JkanR1cWp0Y3kxeGh1dWlmdzVpbXI4bHR0ZjdwYWN5Zm5mZm93aTB0eS1vLmpwZw?1510731378');
+            background-size: cover;
+            background-position: center;
+            color: #333;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: #3a3939d9;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 100%;
+            padding: 30px;
+            display: grid;
+            gap: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            font-size: 36px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .customer-info {
+            padding: 20px;
+            background-color: #ffffffd9;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            position: relative;
+            color: #333;
+        }
+
+        .customer-info label {
+            color: #040404;
+        }
+
+        .customer-info input,
+        .customer-info button {
+            color: #000000;
+        }
+
+        .customer-info input::placeholder {
+            color: #000000;
+        }
+
+        .icon-overlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            opacity: 0.1;
+            width: 100px;
+            height: 100px;
+            background-image: url('https://img.icons8.com/ios/100/garden.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .inputFields {
+            width: 95%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+
+        .inputFields:focus {
+            border-color: #388E3C;
+            outline: none;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+            transition: background-color 0.3s, transform 0.2s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #388E3C;
+            transform: translateY(-2px);
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+
+        .password-strength {
+            font-size: 14px;
+            margin-top: 5px;
+            color: #388E3C;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Join Our Garden Community</h1>
+        <div class="icon-overlay"></div>
+        <div class="customer-info">
+            <form method="post">
+                {% csrf_token %}
+                <label for="fname">First Name</label>
+                <input type="text" id="fname" name="fname" class="inputFields" required>
+                <div class="error" id="fname_error"></div>
+
+                <label for="lname">Last Name</label>
+                <input type="text" id="lname" name="lname" class="inputFields" required>
+                <div class="error" id="lname_error"></div>
+
+                <label for="em">Email</label>
+                <input type="email" id="em" name="em" class="inputFields" required>
+                <div class="error" id="em_error"></div>
+
+                <label for="ph">Phone Number</label>
+                <input type="tel" id="phno" name="phno" maxlength="10" class="inputFields" required>
+                <div class="error" id="phno_error"></div>
+
+                <label for="add">Address</label>
+                <input type="text" id="add" name="add" class="inputFields" required>
+                <div class="error" id="add_error"></div>
+
+                <label for="passw">Password</label>
+                <input type="password" id="passw" name="passw" class="inputFields" required>
+                <div class="error" id="passw_error"></div>
+
+                <label for="confirm_pass">Confirm Password</label>
+                <input type="password" id="confirm_pass" name="confirm_pass" class="inputFields" required>
+                <div class="error" id="confirm_pass_error"></div>
+
+                <div id="password_strength" class="password-strength"></div>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Basic client-side validation
+        document.querySelector('form').addEventListener('submit', function (event) {
+            let valid = true;
+            let fields = ['fname', 'lname', 'em', 'phno', 'passw', 'confirm_pass', 'add'];
+
+            fields.forEach(function (field) {
+                let input = document.getElementById(field);
+                let errorDiv = document.getElementById(field + '_error');
+
+                if (input.value.trim() === '') {
+                    errorDiv.textContent = 'This field is required.';
+                    valid = false;
+                } else {
+                    errorDiv.textContent = '';
+                }
+            });
+
+            let password = document.getElementById('passw').value;
+            let confirmPassword = document.getElementById('confirm_pass').value;
+
+            if (password !== confirmPassword) {
+                document.getElementById('confirm_pass_error').textContent = 'Passwords do not match.';
+                valid = false;
+            } else {
+                document.getElementById('confirm_pass_error').textContent = '';
+            }
+
+            if (!valid) {
+                event.preventDefault();
+            }
+        });
+
+        // Password strength indicator
+        document.getElementById('passw').addEventListener('input', function () {
+            let password = this.value;
+            let strength = 'Weak';
+
+            if (password.length > 8 && /[A-Z]/.test(password) && /[0-9]/.test(password)) {
+                strength = 'Strong';
+            } else if (password.length > 6) {
+                strength = 'Medium';
+            }
+
+            document.getElementById('password_strength').textContent = `Password Strength: ${strength}`;
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

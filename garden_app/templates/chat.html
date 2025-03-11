@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <nav>
+        <div class="navbar-nav">
+                {% if request.session.email %}
+                  <a  class="nav-link" href="/chat/">ChatRoom</a>|
+                {% endif %}
+                    <a class="nav-link" href="/community/">Back to Community</a> 
+          </div>
+        </div>
+    </nav>
+    <h2>Chat with a Person</h2>
+
+    <!-- Display list of users to chat with -->
+    <div class="chat-partners">
+        <h3>Choose someone to chat with:</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <select name="partner_id">
+                <option value="">Select a person</option>
+                {% for partner in partners %}
+                    <option value="{{ partner.id }}">{{ partner.username }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Start Chat</button>
+        </form>
+    </div>
+    
+    <!-- If a partner is selected, display the chat -->
+    {% if selected_partner %}
+        <h3>Chat with {{ selected_partner.username }}</h3>
+    
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message">
+                    <strong>{{ message.sender.username }}:</strong> {{ message.content }}
+                </div>
+            {% endfor %}
+        </div>
+    
+        <!-- Form to send a new message -->
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="partner_id" value="{{ selected_partner.id }}">
+            <textarea name="message" placeholder="Type your message" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+    {% endif %}
+    
+</body>
+</html>

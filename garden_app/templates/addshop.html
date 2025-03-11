@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Shop</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden; /* Prevent overflow */
+            flex-direction: column; /* Ensure content is stacked vertically */
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            margin-top: 20px;
+            overflow-y: auto; /* Allow scrolling within the container if needed */
+            max-height: 90vh; /* Limit container height */
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="file"],
+        textarea,
+        select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: none;
+            height: 60px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .alert {
+            color: red;
+            text-align: center;
+        }
+
+        .footer-link {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Navigation Bar */
+        .navbar-nav {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            justify-content: space-between;
+            width: calc(100% - 20px);
+            z-index: 100;
+        }
+
+        .navbar-nav .nav-link {
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+            padding: 10px 20px;
+            font-size: 1.8rem;
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #388E3C;
+        }
+
+        .navbar-nav .nav-link.back::before {
+            content: "<";
+            padding-right: 8px;
+            font-size: 2rem;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="navbar-nav">
+        <a class="nav-link back" href="/profProfile/"> Back</a> 
+        <a href="{% if request.session.email %}/profhome/{% else %}/userHome/{% endif %}" class="nav-link home">Home</a>
+    </div><br>
+    <div class="container">
+        <h2>Add Shop</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="name">Shop Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="shopid">Shop ID:</label>
+            <input type="text" id="shopid" name="shopid" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone" maxlength="10" required>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description"></textarea>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+
+            <label for="category">Category:</label>
+            <select id="category" name="category">
+                <option value="Plants">Plants</option>
+                <option value="Tools">Tools</option>
+                <option value="Seeds">Seeds</option>
+            </select>
+
+            <label for="img">Image:</label>
+            <input type="file" id="img" name="img" accept="image/*" required>
+
+            <button type="submit">Add Shop</button>
+            <button><a class="footer-link" href="{% url 'shoplist' %}">Your Shop list</a></button>
+        </form>
+    </div>
+</body>
+</html>

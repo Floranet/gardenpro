@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Gardening Community</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}"> <!-- Link to external CSS file -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            /* background: url('https://www.transparenttextures.com/patterns/wood.png') no-repeat center center fixed; Background image */
+            background-image: url("{% static 'images/6.jpeg'%}");
+            background-size: cover;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            background-position: 10% 80%;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-container {
+            max-width: 400px;
+            width: 100%;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2); /* Soft shadow */
+            border-radius: 15px; /* Rounded corners */
+        }
+        .form-label {
+            font-weight: bold;
+            color: #4CAF50; /* Green color for labels */
+        }
+        .login-btn {
+            background-color: #4CAF50;
+            color: #ffffff;
+            font-weight: bold;
+            border: none;
+        }
+        .login-btn:hover {
+            background-color: #388E3C;
+        }
+        h2 {
+            color: #4CAF50;
+            margin-bottom: 30px;
+        }
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #4CAF50;
+        }
+        .text-center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="login-container">
+        <h2 class="text-center mb-4">Login to FloraNet</h2>
+        <form action="/login/" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn login-btn">Login</button>
+            </div>
+            {%if error%}
+            <p>{{error}}
+                {% endif %}            </p>
+            <p class="text-center mt-3">Don't have an account? <a href="{% url 'register' %}">Register here</a>.</p>
+        </form>
+    </div>
+</div>
+
+<!-- Bootstrap JS (optional) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

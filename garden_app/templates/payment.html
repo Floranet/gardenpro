@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Payment - FloraNet Shop</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #c9f0cc;
+            color: #333;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 350px;
+        }
+        .title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2d572c;
+            margin-bottom: 10px;
+        }
+        .muted {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            background-color: #1a952d;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background-color: #136b22;
+        }
+        .navbar-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px; /* Adjust spacing between links */
+        padding: 15px 0;
+        background-color: #f8f9fa; /* Light background for header */
+    }
+
+    .navbar-nav .nav-link {
+        color: #23653a !important; /* Ensures all links are green */
+        font-weight: 600;
+        text-transform: uppercase;
+        padding: 10px 15px;
+        transition: color 0.3s ease-in-out;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: green !important;
+    }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1 class="title">Payment</h1>
+        <small class="muted">Secure and fast payment processing</small>
+        <div class="btn_container">
+            <button class="btn" id="pay-btn">Pay Now</button>
+    </div>
+    <div class="navbar-nav">
+        <div class="mt-4">
+            <a href="/cartlist/" class="text-blue-600 hover:underline">Cart</a> |
+            <a href="/userHome/" class="text-blue-600 hover:underline">Back to Home</a> 
+    </div>
+    </div>
+    </div>
+    
+    <!-- Razorpay's JavaScript code -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        var options = {
+            key: "{{ razorpay_merchant_key }}", 
+            amount: "{{ razorpay_amount }}", 
+            currency: "{{ currency }}",
+            name: "Razorpay For FloraNet", 
+            order_id: "{{ razorpay_order_id }}", 
+            callback_url: "{{ callback_url }}"
+        };
+        var rzp1 = new Razorpay(options);
+        document.getElementById("pay-btn").onclick = function (e) {
+            rzp1.open();
+            e.preventDefault();
+        };
+    </script>
+</body>
+</html>

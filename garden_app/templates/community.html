@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FloraNet Community</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Import a Google Font (Optional) */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #ecf7ec; /* Light greenish background for the entire page */
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* Community Welcome Section */
+.community-welcome {
+    background: #ffffff;
+    border: 2px solid #d4ecd4;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 800px; /* Adjust as needed */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Header */
+.welcome-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.welcome-header h1 {
+    color: #2f5d2f;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+/* Article (Main Content) */
+.welcome-content {
+    margin-bottom: 1.5rem;
+    color: #4b774b;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+/* Aside (Action Links) */
+.welcome-actions {
+    background-color: #f8fff8;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.welcome-actions h2 {
+    color: #2f5d2f;
+    margin-bottom: 0.75rem;
+}
+
+.welcome-actions ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.welcome-actions li {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+}
+
+.welcome-actions li a {
+    color: #2f5d2f;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.welcome-actions li a:hover {
+    color: #007b1a;
+}
+
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
+</head>
+<body class="bg-primary-50 dark:bg-gray-900 transition-colors duration-200">
+    <!-- Navbar -->
+    <nav class="bg-white dark:bg-gray-800 shadow-lg fixed w-full top-0 z-50 border-b border-primary-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/main_page/" class="flex items-center">
+                        <span class="text-2xl font-bold text-primary-600 dark:text-primary-400 hover:text-primary-700 transition-colors duration-200">FloraNet Community</span>
+                    </a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button type="button" id="mobileMenuBtn" class="inline-flex items-center justify-center p-2 rounded-md text-primary-600 hover:text-primary-700 hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        <i data-feather="menu"></i>
+                    </button>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-4">
+                    <div class="flex items-center space-x-2 bg-primary-50 px-4 py-2 rounded-full">
+                        <i data-feather="user" class="text-primary-600"></i>
+                        <span class="hidden sm:block text-primary-700 font-medium">{{ user.email }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div class="dark:bg-gray-800 md:hidden hidden" id="mobileMenu">
+            <div class="px-2 pt-2 pb-3 space-y-1 bg-white shadow-lg rounded-b-lg">
+                {% if a == 'buyer'%}
+                <a href="/profhome/" class="block px-3 py-2 rounded-lg text-base font-medium text-primary-700 hover:text-primary-800 hover:bg-primary-50 transition-colors duration-200">
+                    <div class="flex items-center space-x-2">
+                        <i data-feather="home"></i>
+                        <span>Home</span>
+                    </div>
+                </a>
+                {% else %}
+                <a href="/userHome/" class="block px-3 py-2 rounded-lg text-base font-medium text-primary-700 hover:text-primary-800 hover:bg-primary-50 transition-colors duration-200">
+                    <div class="flex items-center space-x-2">
+                        <i data-feather="home"></i>
+                        <span>Home</span>
+                    </div>
+                </a>
+                {% endif %}
+                <a href="/upload_photo/" class="block px-3 py-2 rounded-lg text-base font-medium text-primary-700 hover:text-primary-800 hover:bg-primary-50 transition-colors duration-200">
+                    <div class="flex items-center space-x-2">
+                        <i data-feather="plus-circle"></i>
+                        <span>Upload Photo</span>
+                    </div>
+                </a>
+                <a href="/view_my_photos/" class="block px-3 py-2 rounded-lg text-base font-medium text-primary-700 hover:text-primary-800 hover:bg-primary-50 transition-colors duration-200">
+                    <div class="flex items-center space-x-2">
+                        <i data-feather="image"></i>
+                        <span>My Photos</span>
+                    </div>
+                </a>
+                <a href="/chat/" class="block px-3 py-2 rounded-lg text-base font-medium text-primary-700 hover:text-primary-800 hover:bg-primary-50 transition-colors duration-200">
+                    <div class="flex items-center space-x-2">
+                        <i data-feather="home"></i>
+                        <span>Chat Room</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-16 flex">
+        <!-- Sidebar -->
+        <aside class="hidden dark:bg-gray-800 md:flex md:flex-col w-64 fixed h-full bg-white shadow-lg border-r border-primary-100">
+            <div class="p-4 space-y-2">
+                {% if a == 'buyer' %}
+                <a href="/profhome/" class="w-full flex items-center space-x-2 p-3 rounded-lg hover:bg-primary-50 text-primary-700 hover:text-primary-800 transition-colors duration-200">
+                    <i data-feather="home"></i>
+                    <span class="font-medium">Home</span>
+                </a>
+                {% else %}
+                <a href="/userHome/" class="w-full flex items-center space-x-2 p-3 rounded-lg hover:bg-primary-50 text-primary-700 hover:text-primary-800 transition-colors duration-200">
+                    <i data-feather="home"></i>
+                    <span class="font-medium">Home</span>
+                </a>
+                {% endif %}
+                <a href="/main_page/" class="w-full flex items-center space-x-2 p-3 rounded-lg hover:bg-primary-50 text-primary-700 hover:text-primary-800 transition-colors duration-200">
+                    <i data-feather="send"></i>
+                    <span class="font-medium">Community</span>
+                </a>
+                <a href="/upload_photo/" class="w-full flex items-center space-x-2 p-3 rounded-lg hover:bg-primary-50 text-primary-700 hover:text-primary-800 transition-colors duration-200">
+                    <i data-feather="plus-circle"></i>
+                    <span class="font-medium">Upload Photo</span>
+                </a>
+                <a href="/view_my_photos/" class="w-full flex items-center space-x-2 p-3 rounded-lg hover:bg-primary-50 text-primary-700 hover:text-primary-800 transition-colors duration-200">
+                    <i data-feather="image"></i>
+                    <span class="font-medium">My Photos</span>
+                </a>
+                <a href="/chat/" class="w-full flex items-center space-x-2 p-3 rounded-lg hover:bg-primary-50 text-primary-700 hover:text-primary-800 transition-colors duration-200">
+                    <i data-feather="message-circle"></i>
+                    <span class="font-medium">Chat Room</span>
+                </a>
+                
+            </div>
+        </aside>
+
+        <!-- Bottom Navigation for Mobile -->
+        <div class="fixed bottom-0 left-0 right-0 dark:bg-gray-800 bg-white border-t border-primary-100 shadow-lg md:hidden">
+            <div class="grid grid-cols-4 gap-1">
+                {% if a == 'farmer' %}
+                <a href="/index/" class="flex flex-col items-center py-3 text-primary-600 hover:text-primary-700 transition-colors duration-200">
+                    <i data-feather="home" class="w-5 h-5"></i>
+                    <span class="text-xs mt-1 font-medium">Home</span>
+                </a>
+                {% else %}
+                <a href="/buy/" class="flex flex-col items-center py-3 text-primary-600 hover:text-primary-700 transition-colors duration-200">
+                    <i data-feather="home" class="w-5 h-5"></i>
+                    <span class="text-xs mt-1 font-medium">Home</span>
+                </a>
+                {% endif %}
+
+                <a href="/upload_photo/" class="flex flex-col items-center py-3 text-primary-600 hover:text-primary-700 transition-colors duration-200">
+                    <i data-feather="plus-circle" class="w-5 h-5"></i>
+                    <span class="text-xs mt-1 font-medium">Upload</span>
+                </a>
+                <a href="/view_my_photos/" class="flex flex-col items-center py-3 text-primary-600 hover:text-primary-700 transition-colors duration-200">
+                    <i data-feather="image" class="w-5 h-5"></i>
+                    <span class="text-xs mt-1 font-medium">My Photos</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 md:ml-64 p-6 mb-16 md:mb-0 dark:bg-gray-800">
+        <div id="page-wrapper">
+           
+            <div id="page-inner">
+            {% block content %}
+            <section class="community-welcome">
+                <header class="welcome-header">
+                    <h1>🌿 Welcome to the Community! 🌿</h1>
+                </header>
+                <article class="welcome-content">
+                    <p>
+                        Join our vibrant community of gardening enthusiasts! Whether you're a beginner or an expert, 
+                        this is the perfect place to share knowledge, seek advice, and grow together.
+                    </p>
+                    <p>
+                        🌱 Explore discussions, get expert tips, and connect with like-minded plant lovers. 
+                        Let's cultivate a greener world, one plant at a time! 🌍
+                    </p>
+                </article>
+            </section>
+            </div>
+        </div>
+        </main>
+        {% endblock %}
+    
+    </div>
+
+    <script>
+        feather.replace();
+
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+    
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+    </script>    
+</body>
+</html>

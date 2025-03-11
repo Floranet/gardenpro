@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Gardening Skills</title>
+
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-image: url('https://source.unsplash.com/1600x900/?garden,plants');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #2e4d25; /* Dark green for readability */
+        }
+
+        .upload-form-container {
+            background: #e6f4ea; /* Light green background */
+            padding: 2rem;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-control, .btn-upload, .btn-back {
+            border-radius: 8px;
+        }
+
+        .btn-upload {
+            background-color: #4CAF50; /* Garden Green */
+            color: white;
+            font-weight: bold;
+        }
+
+        .btn-upload:hover {
+            background-color: #388E3C;
+        }
+
+        .btn-back {
+            background-color: #388E3C;
+            color: white;
+            display: block;
+            width: 100%;
+            margin-bottom: 1rem;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn-back:hover {
+            background-color: #388E3C;
+        }
+
+        label {
+            font-weight: bold;
+            color: #2e4d25; /* Dark green */
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-form-container">
+        <h1 class="text-center mb-4" style="color: #2e4d25;">Upload Resources</h1>
+
+        <form action="{% url 'vdo' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" class="form-control" placeholder="Enter gardening tip title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="video_file">Upload Video (optional):</label>
+                <input type="file" id="video_file" name="video_file" class="form-control-file" accept="video/*">
+            </div>
+
+            <div class="form-group">
+                <label for="image_file">Upload Image (optional):</label>
+                <input type="file" id="image_file" name="image_file" class="form-control-file" accept="image/*">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="text" id="description" name="description" class="form-control" placeholder="Describe your gardening tip" required>
+            </div>
+
+            <button type="submit" class="btn btn-upload btn-block">Upload</button><br>
+            <a href="{% url 'profProfile' %}" class="btn btn-back">Back</a>
+            <a href="{% url 'profhome' %}" class="btn btn-back">Home</a>
+        </form>
+    </div>
+
+    <!-- Bootstrap and Tailwind JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

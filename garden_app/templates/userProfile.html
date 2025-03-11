@@ -1,0 +1,253 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gardener Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            /* background-image: url("{% static 'images/12.jpg' %}"); */
+            background-color: #E6E6F3;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #2c3e50;
+        }
+
+        .container {
+    display: flex;
+    justify-content: flex-start; /* Align items to the left */
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.profile-header {
+    flex: 2;
+    color: #2e8b57;
+    margin-right: 20px;
+}
+
+        .profile-header h2 {
+            font-size: 36px; /* Increased text size */
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .profile-info {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+        .profile-name {
+            font-size: 32px; /* Increased text size */
+            font-weight: bold;
+            color: #2e8b57;
+            margin-bottom: 15px;
+        }
+
+        .profile-info-item {
+            margin-bottom: 15px; /* Increased margin */
+        }
+
+        .profile-info label {
+            font-weight: bold;
+            color: #4a604f;
+            display: block;
+            font-size: 18px; /* Increased label font size */
+            margin-bottom: 6px; /* Increased spacing */
+        }
+
+        .profile-info span {
+            font-size: 18px; /* Increased text size */
+            color: #555;
+        }
+
+        .sidebar {
+    width: 100%;
+    max-width: 400px; /* Optional: Set a max-width for the sidebar */
+    background-color: #f9f9f9;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin-top: 20px; /* Add margin to the top */
+    margin-left: 20px; /* Add some space between profile and sidebar */
+}
+
+
+        .sidebar h3 {
+            font-size: 24px; /* Increased heading size */
+            color: #2c3e50;
+            margin-bottom: 20px; /* Increased margin */
+        }
+
+        .sidebar-item {
+            margin-bottom: 15px; /* Increased margin */
+            padding: 15px; /* Increased padding */
+            background-color: #d4e2d4;
+            border-radius: 8px;
+            color: #4a604f;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            font-size: 18px; /* Increased text size */
+        }
+
+        /* Footer Links */
+        .footer-link {
+            color: white;
+            background-color: #2e8b57;
+            text-decoration: none;
+            display: inline-block;
+            padding: 12px 25px; /* Increased padding */
+            margin-top: 15px; /* Increased margin */
+            border-radius: 5px;
+            font-size: 18px; /* Increased text size */
+            transition: background-color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            background-color: #245d3c;
+            text-decoration: none;
+        }
+
+        .navbar-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 0;
+            margin: 0;
+            background-color: #c9f0cc;
+        }
+
+        .navbar-nav .nav-link {
+            color: #23653a !important;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 12px 18px; /* Increased padding */
+            transition: color 0.3s ease-in-out;
+            display: flex;
+            font-size: 18px; /* Increased text size */
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: green !important;
+        }
+
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .profile-header, .sidebar {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+
+.profile-heading {
+    font-size: 36px;
+    font-weight: bold;
+    color: #2E8B57; /* A deep, fresh green */
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+}
+
+
+
+    </style>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="profile-heading">
+      <B>PROFILE</B>
+    </div>
+    <div class="container">
+        <div class="profile-header">
+            <div class="profile-info">
+                <div class="text-center">
+                    <div class="profile-name">{{ first_name }} {{ last_name }}</div>
+                </div>
+                <div class="profile-info-item">
+                    <label>Email:</label>
+                    <span>{{ email }}</span>
+                </div>
+                <div class="profile-info-item">
+                    <label>Phone Number:</label>
+                    <span>{{ phone }}</span>
+                </div>
+                <div class="profile-info-item">
+                    <label>Address:</label>
+                    <span>{{ address }}</span>
+                </div>
+                <div class="mt-4">
+                    <a href="/update_profile/" class="footer-link">Edit Profile</a> 
+                    <a href="/userHome/" class="footer-link">Back to Home</a>
+                    <a class="footer-link" href="/user_logout/">Log Out</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <h3></h3>
+            <div class="sidebar-item"><a href="/feedback_rate/">Feedback</a></div>
+            <div class="sidebar-item"><a href="/cartlist/">Your Cart</a>
+            {% if cart_items %}
+                {% for item in cart_items %}
+                    <div class="sidebar-item">
+                        <p class="font-semibold">{{ item.prod_name }}</p>
+                        <p>Quantity: {{ item.quantity }} | Price: {{ item.price }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Your cart is empty.</p>
+            {% endif %}
+        </div>
+        </div>
+    </div>
+
+    <div class="bg-white p-8 rounded-lg shadow-lg mt-8">
+        <h1 class="text-3xl font-extrabold text-gray-800 text-center">Payment History</h1>
+        {% if payments %}
+            <div class="overflow-x-auto mt-6">
+                <table class="w-full border-collapse bg-white shadow-md rounded-lg text-lg">
+                    <thead>
+                        <tr class="bg-gray-200 text-gray-700">
+                            <th class="py-3 px-4">Product Name</th>
+                            <th class="py-3 px-4">Quantity</th>
+                            <th class="py-3 px-4">Price</th>
+                            <th class="py-3 px-4">Phone</th>
+                            <th class="py-3 px-4">Download</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for payment in payments %}
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="py-3 px-4 text-center">{{ payment.prod_name }}</td>
+                            <td class="py-3 px-4 text-center">{{ payment.quantity }}</td>
+                            <td class="py-3 px-4 text-center">{{ payment.price }}</td>
+                            <td class="py-3 px-4 text-center">{{ payment.phone }}</td>
+                            <td class="py-3 px-4 text-center">
+                                <a href="{% url 'download_payment_pdf' payment.id %}" class="text-blue-500 hover:underline">Download PDF</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="text-lg text-gray-600 mt-4 text-center">No payment details found for {{ email }}</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>

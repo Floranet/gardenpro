@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garden Management Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #f0f7f4, #e6eee9);
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(to right, #f0f7f4, #e6eee9);
+            color: #2e8b57;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* Calendar */
+        #calendar {
+            margin-top: 20px;
+        }
+
+        /* Checklist */
+        .checklist ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .checklist input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        /* Button-like Links */
+        .footer-link {
+            color: white;
+            background-color: #2e8b57;
+            text-decoration: none;
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            background-color: #245d3c;
+            text-decoration: none;
+        }
+
+        .text-center {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        /* Form styling */
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-container input,
+        .form-container textarea,
+        .form-container button {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-container button {
+            background-color: #2e8b57;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #c9f0cc;
+        }    .navbar-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px; /* Adjust spacing between links */
+        padding: 15px 0;
+        background-color: #c9f0cc; /* Light background for header */
+    }
+
+    .navbar-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background for better visibility */
+            border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .navbar-nav .nav-link {
+            color: #23653a !important;
+            font-weight: 600;
+            font-size: 20px;
+            text-transform: uppercase;
+            padding: 12px 20px;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out, transform 0.3s;
+        }
+        .navbar-nav .nav-link:hover {
+            color: green !important;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <header class="header_section">
+        <nav>
+            <div class="navbar-nav">
+                <div>
+                    {% if request.session.email %}
+                      <a a class="nav-link" href="/profhome/">Home</a>
+                    {% else %}
+                      <a a class="nav-link" href="/userHome/">Home</a>
+                    {% endif %}
+                  </div>
+                <a class="nav-link" href="/userProfile/">Profile</a>
+                <a class="nav-link" href="/user_prod/">Shop</a>
+                <a class="nav-link" href="/user_shoplist/">View shops</a>
+                <a class="nav-link" href="/edu/">Resource</a>
+                <a class="nav-link" href="/community/">Community</a>
+                <a class="nav-link" href="/tools/">Management</a>
+            </div>
+        </nav>
+    </header>
+    <header>
+        <h1>Management Dashboard</h1>
+    </header>
+
+    <div class="container">
+        <div class="dashboard">
+            <!-- Calendar Section -->
+            <div class="card">
+                <h2>Garden Calendar</h2>
+                <div class="form-container">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" name="title" required>
+
+                        <label for="date">Date:</label>
+                        <input type="date" id="date" name="date" required>
+
+                        <label for="time">Time:</label>
+                        <input type="time" id="time" name="time" required>
+
+                        <label for="reminder_text">Reminder Text:</label>
+                        <textarea id="reminder_text" name="reminder_text"></textarea>
+
+                        <button type="submit">Add Reminder</button>
+                    </form>
+                </div>
+                <div id="calendar"></div>
+            </div>
+
+            <!-- Checklist Section -->
+            <div class="card checklist">
+                <h2>Garden Checklist</h2>
+                <ul id="checklist">
+                    <li>
+                        <button onclick="addCheckbox()">Add Task</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer Links -->
+        <div class="text-center">
+            <a class="footer-link" href="/calendernew/">Calendar</a>
+            <br>
+            <a class="footer-link" href="/tasklist/">Your Tasks</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function addCheckbox() {
+            var ul = document.getElementById("checklist");
+            var li = document.createElement("li");
+
+            // Create checkbox
+            var checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+
+            // Create input field for editable task text
+            var input = document.createElement("input");
+            input.type = "text";
+            input.value = "New task";  // Default task text
+
+            // Create delete button
+            var deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "Delete";
+            deleteBtn.addEventListener("click", function() {
+                ul.removeChild(li); // Remove task from UI
+                deleteTaskFromBackend(input.dataset.taskId); // Remove from backend
+            });
+
+            // Append checkbox, input (editable field), and delete button to the list item
+            li.appendChild(checkbox);
+            li.appendChild(input);
+            li.appendChild(deleteBtn);
+            ul.appendChild(li);
+
+            // **Only save when editing is finished**
+            input.addEventListener("blur", function() {
+                var taskTitle = input.value;  
+                if (!input.dataset.taskId) {
+                    // If task is new, send it to the backend to create it
+                    sendTaskToBackend(taskTitle, checkbox.checked, function(taskId) {
+                        input.dataset.taskId = taskId;  // Store task ID in input field
+                    });
+                } else {
+                    // If task exists, update it
+                    updateTaskInBackend(input.dataset.taskId, taskTitle, checkbox.checked);
+                }
+            });
+
+            checkbox.addEventListener("change", function() {
+                if (input.dataset.taskId) {
+                    updateTaskInBackend(input.dataset.taskId, input.value, checkbox.checked);
+                }
+            });
+        }
+
+        // Functions for backend communication
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        function sendTaskToBackend(taskTitle, taskStatus, callback) {
+            fetch('/add_task/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    'task_title': taskTitle,
+                    'task_status': taskStatus
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Task created:', data);
+                if (callback) callback(data.task_id);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+        function updateTaskInBackend(taskId, taskTitle, taskStatus) {
+            fetch('/update_task/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    'task_id': taskId,
+                    'task_title': taskTitle,
+                    'task_status': taskStatus
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Task updated:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+        function deleteTaskFromBackend(taskId) {
+            fetch('/delete_task/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({ 'task_id': taskId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Task deleted:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

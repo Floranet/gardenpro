@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Details</title>
+</head>
+<body>
+    <h1>Payment Details</h1>
+    
+    <h2>Results for {{ email }}</h2>
+    {% if payments %}
+        <table border="1">
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Phone</th>
+                <th>Download</th>
+            </tr>
+            {% for payment in payments %}
+            <tr>
+                <td>{{ payment.prod_name }}</td>
+                <td>{{ payment.quantity }}</td>
+                <td>{{ payment.price }}</td>
+                <td>{{ payment.phone }}</td>
+                <td><a href="{% url 'download_payment_pdf' payment.id %}">Download PDF</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No payment details found for {{ email }}</p>
+    {% endif %}
+</body>
+</html>

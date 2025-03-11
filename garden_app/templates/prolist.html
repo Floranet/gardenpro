@@ -1,0 +1,67 @@
+{% extends 'admin_dash.html' %}
+{% block content %}
+
+<h2>Professionals</h2>
+<table border="2">
+    <tr>
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>UserId</th>
+        <th>E-mail</th>
+        <th>Address</th>
+        <th>Phone no</th>
+        <th>Password</th>
+        <th>Delete</th>
+        <th>Status</th>
+    </tr>
+    {% for prof in prof %}
+    <tr>
+        <td>{{ prof.fname }}</td>
+        <td>{{ prof.lname }}</td>
+        <td>{{ prof.id }}</td>
+        <td>{{ prof.em }}</td>
+        <td>{{ prof.add }}</td>
+        <td>{{ prof.phno }}</td>
+        <td>{{ prof.passw }}</td>
+        <td><a href="/delete_prof/{{ prof.id }}">Delete</a></td>
+        <td>
+            <form method="post" action="{% url 'up_status' %}">
+                {% csrf_token %}
+                <input type="hidden" name="em" value="{{ prof.em }}">
+                <select name="status">
+                    <option value="applied" {% if prof.status == 'applied' %}selected{% endif %}>Applied</option>
+                    <option value="approved" {% if prof.status == 'approved' %}selected{% endif %}>Approved</option>
+                    <option value="rejected" {% if prof.status == 'rejected' %}selected{% endif %}>Rejected</option>
+                </select>
+                <button type="submit">Update Status</button>
+            </form>           
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<style>
+    body {
+        background-color: aquamarine;
+        font-family: Arial, sans-serif;
+        display: block;
+    }
+    h2 {
+        text-align: center;
+        font-style: italic;
+    }
+    table {
+        border: 1px dotted black;
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #f0f0f0;
+        margin-top: 20px;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #e9f7e4; /* Light green background */
+            margin: 0;
+            padding: 0;
+        }
+        .wrapper {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+        .back-button a {
+            font-size: 1.2rem;
+            padding: 12px 20px;
+            background-color: green;
+            color: white;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+        .back-button a:hover {
+            background-color: #21783f;
+        }
+        .shop-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: space-between;
+        }
+        .shop-card {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: calc(33.333% - 30px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+        .shop-card:hover {
+            transform: translateY(-5px); /* Lift effect */
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+        .shop-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+        .shop-card:hover img {
+            opacity: 0.8;
+        }
+        .shop-card .content {
+            padding: 20px;
+            flex-grow: 1;
+        }
+        .shop-card .content h3 {
+            font-size: 1.8rem;
+            margin: 0 0 10px;
+            color: #333;
+        }
+        .shop-card .content p {
+            font-size: 1rem;
+            margin: 8px 0;
+            color: #555;
+            line-height: 1.5;
+        }
+        .shop-card .content .category {
+            font-size: 1.1rem;
+            color: #888;
+            margin-top: 10px;
+        }
+        .shop-card .content .button-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .shop-card .content .button-container a {
+            padding: 12px 25px;
+            background-color: #23653a;
+            color: white;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        .shop-card .content .button-container a:hover {
+            background-color: #23653a;
+        }
+        /* Modal styles */
+        .modal-header {
+            color: white !important;
+            background-color: #23653a;
+            color: white;
+        }
+        .modal-body {
+            font-size: 1.1rem;
+            color: #333;
+        }
+/* Navbar with back button aligned */
+.navbar {
+    background-color: #ffffff83;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    justify-content: space-evenly;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar h1 {
+    font-family: 'Georgia', serif;
+    font-size: 3em;
+    color: #388e3c;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    margin: 0;
+}
+.navbar a {
+    padding: 10px 12px; /* Maintain padding for clickable area */
+    margin-right: 0; /* Remove space between buttons */
+}
+
+.back-button {
+    padding: 10px 12px;
+    background-color: #ffffff83;
+    color: #388e3c !important;
+    font-size: 1.3em;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s;
+  }
+
+    </style>
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a href="{% if request.session.email %}/profhome/{% else %}/userHome/{% endif %}" class="back-button">Home</a>
+                    <a  class="back-button" href="/user_shoplist/">View shops</a>
+                    <a class="back-button" href="/user_prod/">Shop</a>
+                    <a  class="back-button" href="/edu/">Resource</a>
+                    <a  class="back-button" href="/community/">Community</a>
+                    <a  class="back-button"  href="/tools/">Management</a>
+      </nav>
+
+    <div class="wrapper">
+        <h1>Available Shops</h1>
+        <div class="shop-list">
+            {% for s in shops %}
+            <div class="shop-card" data-toggle="modal" data-target="#shopModal"
+                 data-name="{{ s.name }}"
+                 data-location="{{ s.location }}"
+                 data-description="{{ s.description }}"
+                 data-category="{{ s.category }}"
+                 data-img="{{ s.img.url }}">
+                <img src="{{ s.img.url }}" alt="{{ s.name }}">
+                <div class="content">
+                    <h3>{{ s.name }}</h3>
+                    <p><strong>Location:</strong> {{ s.location }}</p>
+                    <!-- <p><strong>Description:</strong> {{ s.description }}</p> -->
+                    <p class="category"><strong>Category:</strong> {{ s.category }}</p>
+                    <div class="button-container">
+                        <a href="#">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="shopModal" tabindex="-1" role="dialog" aria-labelledby="shopModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="shopModalLabel">Shop Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="modalContent">
+                        <img src="" id="modalImg" class="img-fluid" alt="Shop Image">
+                        <h3 id="modalName"></h3>
+                        <p id="modalLocation"></p>
+                        <p id="modalDescription"></p>
+                        <p id="modalCategory"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $('#shopModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var name = button.data('name');
+            var location = button.data('location');
+            var description = button.data('description');
+            var category = button.data('category');
+            var img = button.data('img');
+
+            var modal = $(this);
+            modal.find('#modalName').text(name);
+            modal.find('#modalLocation').text('Location: ' + location);
+            modal.find('#modalDescription').text('Description: ' + description);
+            modal.find('#modalCategory').text('Category: ' + category);
+            modal.find('#modalImg').attr('src', img);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Educational Resources</title>
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+  <style>
+ body {
+    font-family: 'Arial', sans-serif;
+    background: #e9f7e4;
+    background-image: url('/static/images/gardening_background.jpg');
+    color: #2e7d32; /* Dark green text */
+    margin: 0;
+    padding: 0;
+    font-size: 18px; /* Increase base text size */
+}
+
+h1 {
+    color: #388e3c; /* Darker green for the title */
+    font-family: 'Georgia', serif;
+    font-size: 3em; /* Make heading larger */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+.container {
+    margin-top: 40px;
+}
+
+/* Card-like styling */
+.resource-card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border: 1px solid #a5d6a7; /* Light green border */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* Ensures cards fill their columns */
+}
+
+.resource-card:hover {
+    background-color: #c8e6c9;
+    transform: translateY(-5px); /* Slightly lift the card on hover */
+}
+
+.resource-title {
+    font-size: 2em; /* Increase resource title size */
+    font-weight: bold;
+    color: #388e3c;
+    margin-bottom: 12px;
+    text-align: center; /* Center the title */
+}
+
+.resource-description {
+    font-size: 1.3em; /* Increase description text */
+    margin-bottom: 15px;
+    text-align: center; /* Center the description */
+}
+
+.resource-description strong {
+    color: #2e7d32;
+}
+
+.resource-card p {
+    font-size: 1.2em; /* Make uploaded by text larger */
+    color: #388e3c;
+    text-align: center; /* Center the uploaded by text */
+}
+
+/* Center the entire row of cards */
+.row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Allow cards to wrap on smaller screens */
+}
+
+.col-md-6, .col-lg-4 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px; /* Spacing between rows */
+}
+
+/* Modal styles */
+.modal-content {
+    background-color: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #a5d6a7;
+}
+
+.modal-header {
+    background-color: #a5d6a7;
+    color: #fff;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.modal-title {
+    font-size: 2em; /* Larger modal title */
+}
+
+.modal-body {
+    background-color: #f1f8e9;
+}
+
+.modal-body p {
+    font-size: 1.3em; /* Increase modal description text */
+}
+
+#resourceMedia img,
+#resourceMedia video {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+/* Navbar with back button aligned */
+.navbar {
+    background-color: #ffffff83;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    justify-content: space-evenly;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar a {
+    padding: 10px 12px; /* Maintain padding for clickable area */
+    margin-right: 0; /* Remove space between buttons */
+}
+
+.back-button {
+    padding: 10px 12px;
+    background-color: #ffffff83;
+    color: #388e3c !important;
+    font-size: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s;
+  }
+
+
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <a href="{% if request.session.email %}/profhome/{% else %}/userHome/{% endif %}" class="back-button">Home</a>
+                <a  class="back-button" href="/user_shoplist/">View shops</a>
+                <a class="back-button" href="/user_prod/">Shop</a>
+                <a  class="back-button" href="/edu/">Resource</a>
+                <a  class="back-button" href="/community/">Community</a>
+                <a  class="back-button"  href="/tools/">Management</a>
+  </nav>
+  <div class="container">
+  <h1 class="text-center">Resources</h1>
+  <!-- Use Bootstrap's grid system -->
+  <div class="row">
+    {% for resource in resources %}
+      <!-- Adjust columns as needed (e.g., 4 columns on large, 6 on medium) -->
+      <div class="col-md-6 col-lg-4 mb-4">
+        <!-- Card -->
+        <div class="resource-card"
+             data-toggle="modal" data-target="#resourceModal"
+             data-title="{{ resource.title }}"
+             data-description="{{ resource.description }}"
+             {% if resource.video_file %}
+               data-media-url="{{ resource.video_file.url }}"
+               data-media-type="video"
+             {% elif resource.image_file %}
+               data-media-url="{{ resource.image_file.url }}"
+               data-media-type="image"
+             {% else %}
+               data-media-url=""
+               data-media-type="none"
+             {% endif %}
+        >
+          <div>
+            <div class="resource-title">{{ resource.title }}</div>
+            <div class="resource-description">
+              <strong>Description:</strong> {{ resource.description }}
+            </div>
+          </div>
+          <div>
+            <p><strong>Uploaded by:</strong> {{ resource.name }}</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    
+    {% if not resources %}
+      <p>No resources available.</p>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="resourceModal" tabindex="-1" aria-labelledby="resourceModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="resourceModalLabel">Resource Title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="resourceDescription"></p>
+        <div id="resourceMedia" class="text-center">
+          <!-- Media content will be injected here -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  $('#resourceModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var title = button.data('title');
+    var description = button.data('description');
+    var mediaUrl = button.data('media-url');
+    var mediaType = button.data('media-type');
+
+    var modal = $(this);
+    modal.find('.modal-title').text(title);
+    modal.find('#resourceDescription').text(description);
+
+    var mediaContent = '';
+    if (mediaType === 'video') {
+      mediaContent = '<video class="img-fluid" controls><source src="' + mediaUrl + '" type="video/mp4">Your browser does not support the video tag.</video>';
+    } else if (mediaType === 'image') {
+      mediaContent = '<img src="' + mediaUrl + '" class="img-fluid" alt="' + title + '">';
+    } else {
+      mediaContent = '<p>No media available.</p>';
+    }
+    modal.find('#resourceMedia').html(mediaContent);
+  });
+</script>
+
+</body>
+</html>

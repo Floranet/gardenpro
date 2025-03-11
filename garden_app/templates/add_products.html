@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Product Registration - Garden Community</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://img.freepik.com/foto-gratis/herramientas-jardineria-laicos-planos-sobre-fondo-madera-espacio-copia_23-2148396901.jpg?t=st=1730033386~exp=1730036986~hmac=3d6bfd8c3bf8b22780fe4d4a0510365449111a69e6e8776cb8f0f69837baedae&w=996'); /* Soft garden background */
+            background-size: cover;
+            background-position: center;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            padding: 20px; /* Add padding to the body */
+            box-sizing: border-box; /* Include padding in height calculation */
+        }
+
+        /* Navigation Bar */
+        .navbar-nav {
+            position: fixed;
+            top: 10px; /* Top margin for the navbar */
+            left: 10px; /* Left margin for the navbar */
+            display: flex;
+            justify-content: space-between;
+            width: calc(100% - 20px); /* Subtract margins */
+            z-index: 100;
+        }
+
+        .navbar-nav .nav-link {
+            text-decoration: none;
+            color: #4CAF50; /* Green text color to blend with the background */
+            font-weight: bold;
+            padding: 10px 20px;
+            font-size: 1.8rem;
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center; /* Vertically align the text */
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #388E3C; /* Darker green on hover */
+        }
+
+        /* Ensure correct placement of symbols */
+        .navbar-nav .nav-link.back::before {
+            content: "<";
+            padding-right: 8px; /* Space between symbol and text */
+            font-size: 2rem;
+        }
+
+        /* Section Styling */
+        section {
+            padding-top: 80px; /* To make space for fixed navbar */
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeIn 1s ease;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        input[type="text"], input[type="file"], input[type="tel"], input[type="number"] {
+            border: 2px solid #4CAF50; /* Green border */
+            border-radius: 5px;
+            padding: 0.8rem;
+            font-size: 1rem;
+            transition: border 0.2s ease;
+        }
+
+        input[type="text"]:focus, input[type="file"]:focus, 
+        input[type="tel"]:focus, input[type="number"]:focus {
+            border-color: #388E3C; /* Darker green for focus */
+            outline: none;
+        }
+
+        input[type="submit"] {
+            font-weight: 600;
+            background-color: #4CAF50;
+            color: white;
+            padding: 0.8rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #388E3C; /* Darker green on hover */
+        }
+
+        input[type="submit"]:active {
+            transform: scale(0.98);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar-nav">
+        <a class="nav-link back" href="/profProfile/">Back</a>  <!-- "Back" without symbols -->
+        <a class="nav-link home" href="/profhome/">Home</a>  <!-- "Home" with "<" symbol -->
+    </div>
+
+    <section>
+        <form action="{% url 'add_products' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="prod_name">Product Name</label>
+                <input type="text" id="prod_name" name="prod_name" required>
+                {% if form.prod_name.errors %}
+                    <div class="error">{{ form.prod_name.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="prod_type">Product Type</label>
+                <input type="text" id="prod_type" name="prod_type" required>
+                {% if form.prod_type.errors %}
+                    <div class="error">{{ form.prod_type.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" name="quantity" step="1" required>
+                {% if form.quantity.errors %}
+                    <div class="error">{{ form.quantity.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="text" id="price" name="price" required>
+                {% if form.price.errors %}
+                    <div class="error">{{ form.price.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="seller_name">Seller Name</label>
+                <input type="text" id="seller_name" name="seller_name" required>
+                {% if form.seller_name.errors %}
+                    <div class="error">{{ form.seller_name.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="seller_phone">Seller Phone</label>
+                <input type="tel" id="seller_phone" name="seller_phone" pattern="[0-9]{10}" required>
+                {% if form.seller_phone.errors %}
+                    <div class="error">{{ form.seller_phone.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="img">Product Image</label>
+                <input type="file" id="img" name="img" accept="image/*">
+                {% if form.img.errors %}
+                    <div class="error">{{ form.img.errors }}</div>
+                {% endif %}
+            </div>
+
+            <input type="submit" value="Register">
+        </form>
+    </section>
+
+</body>
+</html>

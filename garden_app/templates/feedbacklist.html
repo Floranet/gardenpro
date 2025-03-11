@@ -1,0 +1,71 @@
+{% extends 'admin_dash.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>user List</title>
+    <style>
+        body {
+            background-color: #c9f0cc;
+            font-style: black;
+            display: block;
+        }
+        h1 {
+            text-align: center;
+            font-style: italic;
+        }
+        table {
+            border: dotted;
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #f0f0f0; /* Muted color */
+            margin-top: 20px; /* Adjust margin as needed */
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+<body>
+    <h2>USER Feedback</h2>
+    <table border="2">
+        <tr>
+            <th>feedback</th>
+            <th>rating</th>
+            <th>Delete</th>
+        </tr>
+        {% for u in feed %}
+        <tr>
+            <td>{{u.feedback_text}}</td>
+            <td>{{u.rating}}</td>
+            <td><a href="/delete_feedback/{{ u.id }}">Delete</a></td>
+
+        </tr>
+        {% endfor %}
+    </table>
+
+    
+    <h2>Professionals Feedback</h2>
+    <table border="2">
+        <tr>
+            <th>feedback</th>
+            <th>rating</th>
+            <th>Delete</th>
+        </tr>
+        {% for p in feedb %}
+        <tr>
+            <td>{{p.feedback_text}}</td>
+            <td>{{p.rating}}</td>
+            <td><a href="/delete_feed/{{ p.id }}">Delete</a></td>
+
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+{% endblock %}
+
+

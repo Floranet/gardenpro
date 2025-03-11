@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Failed</title>
+</head>
+<style>
+    .navbar-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background for better visibility */
+            border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .navbar-nav .nav-link {
+            color: #23653a !important;
+            font-weight: 600;
+            font-size: 20px;
+            text-transform: uppercase;
+            padding: 12px 20px;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out, transform 0.3s;
+        }
+        .navbar-nav .nav-link:hover {
+            color: green !important;
+            transform: scale(1.05);
+        }
+</style>
+<body>
+    <h1>Payment Failed</h1>
+    <p>Your payment could not be processed. Please try again later.</p>
+    <nav>
+        <div class="navbar-nav">
+                {% if request.session.email %}
+                  <a  class="nav-link" href="/userHome/">Home</a>|
+                {% endif %}
+                    <a class="nav-link" href="/cart/">Go to Cart</a> 
+        
+          </div>
+        </div>
+    </nav>
+</body>
+</html>

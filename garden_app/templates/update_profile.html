@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - Gardening Community</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #c9f0cc, #e0f7e9);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .profile-container {
+            width: 100%;
+            max-width: 600px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .profile-container h2 {
+            color: #2E7D32;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .profile-info .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+        .info-item .info-text {
+            font-size: 16px;
+            color: #2E7D32;
+        }
+        .info-item input {
+            border: none;
+            outline: none;
+            background: transparent;
+            width: 70%;
+            font-size: 16px;
+            color: #333;
+            text-align: right;
+        }
+        .info-item input:focus {
+            border-bottom: 2px solid #2E7D32;
+        }
+        .info-item .info-text, .info-item input {
+            transition: all 0.3s ease;
+        }
+        .btn-submit {
+            background: #2E7D32;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            width: 100%;
+            border: none;
+            transition: background 0.3s;
+        }
+        .btn-submit:hover {
+            background: #1B5E20;
+        }
+        .btn-profile, .btn-home {
+            margin-top: 20px;
+            width: 48%;
+        }
+        .btn-profile {
+            background: #1B5E20;
+            color: #fff;
+        }
+        .btn-profile:hover {
+            background: #1B5E20;
+        }
+        .btn-home {
+            background: #1B5E20;
+            color: #fff;
+        }
+        .btn-home:hover {
+            background: #1B5E20;
+        }
+    </style>
+</head>
+<body>
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="profile-container">
+        <h2>Edit Your Profile</h2>
+        <form action="/proupdate/" method="post">
+            {% csrf_token %}
+            <div class="profile-info">
+                <div class="info-item">
+                    <span class="info-text">First Name</span>
+                    <input type="text" name="first_name" value="{{first_name}}">
+                </div>
+                <div class="info-item">
+                    <span class="info-text">Last Name</span>
+                    <input type="text" name="last_name" value="{{last_name}}">
+                </div>
+                <div class="info-item">
+                    <span class="info-text">Email</span>
+                    <input type="email" name="email" value="{{email}}">
+                </div>
+                <div class="info-item">
+                    <span class="info-text">Address</span>
+                    <input type="text" name="address" value="{{address}}">
+                </div>
+                <div class="info-item">
+                    <span class="info-text">Phone Number</span>
+                    <input type="tel" name="phone" value="{{phone}}">
+                </div>
+                <div class="info-item">
+                    <span class="info-text">Password</span>
+                    <input type="password" name="password">
+                </div>
+                <div class="info-item">
+                    <span class="info-text">Confirm Password</span>
+                    <input type="password" name="confirm_password">
+                </div>
+            </div>
+            <button type="submit" class="btn-submit">Update Profile</button>
+            <div class="d-flex justify-content-between">
+                <a href="/userProfile/" class="btn btn-profile">Go Back to Profile</a>
+                <a href="/userHome/" class="btn btn-home">Home</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

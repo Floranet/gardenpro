@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .calendar-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .calendar-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .calendar-list li {
+            background-color: #f4f4f4;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .event-date {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .event-name {
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calendar-container">
+    <h2>Upcoming Events</h2>
+    <table border="1">
+        <tr>
+            <th>SlNo</th>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Note</th>
+        </tr>
+        {% for i in cal %}
+        <tr>
+            <td>{{i.id}}</td>
+            <td>{{i.title}}</td>
+            <td>{{i.date}}</td>
+            <td>{{i.reminder_text}}</td>
+            <td><a href="/delete_reminder/{{i.id}}">Delete</a></td>
+
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!-- garden_app/templates/garden_app/calendar.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css' rel='stylesheet' />
+    <style>
+        .form-container {
+            margin: 20px;
+        }
+        .form-container input, .form-container textarea {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calendar</h1>
+
+    <!-- Form for adding a new reminder -->
+    <div class="form-container">
+        <form method="POST" action="{% url 'calendar' %}">
+            {% csrf_token %}
+            <ul>
+            <li class="nav-item"></li>
+                <a class="nav-link" href="/callist/">Remainders</a>
+            </li>
+            </ul>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="reminder_text">Reminder Text:</label>
+            <textarea id="reminder_text" name="reminder_text"></textarea>
+
+            <button type="submit">Add Reminder</button>
+        </form>
+    </div>
+
+    <!-- Display reminders -->
+    <div id='calendar'></div>
+
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js'></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: '/reminders/',  // Fetch reminders via JSON
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                }
+            });
+            calendar.render();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with {{ receiver.username }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #c9f0cc; }
+        .chat-container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 10px; padding: 20px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1); }
+        .chat-header { text-align: center; margin-bottom: 20px; }
+        .messages { 
+            border: 1px solid #ddd; 
+            padding: 10px; 
+            height: 400px; 
+            overflow-y: scroll; 
+            margin-bottom: 20px; 
+            background-color: #c9f0cc;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .message { 
+            margin-bottom: 10px; 
+            padding: 10px; 
+            border-radius: 15px; 
+            max-width: 75%; 
+            word-wrap: break-word; 
+            display: flex;
+            flex-direction: column;
+        }
+        .sent { 
+            background-color: #d1e7dd; 
+            align-self: flex-end; /* Align to the right */
+            text-align: right; 
+            margin-left: auto;
+        }
+        .received { 
+            background-color: #bcf1c0; 
+            align-self: flex-start; /* Align to the left */
+            text-align: left; 
+            margin-right: auto; 
+        }
+        .chat-form { display: flex; flex-direction: column; margin-top: 10px; }
+        .chat-form textarea { 
+            flex: 1; 
+            padding: 10px; 
+            border: 1px solid #ddd; 
+            border-radius: 5px; 
+            resize: none; 
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        .form-actions {
+            display: flex;
+            align-items: center;
+        }
+        .form-actions input[type="file"] {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .form-actions button { 
+            padding: 10px 20px; 
+            margin-left: 10px; 
+            background-color: #09c858; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+        }
+        .form-actions button:hover { background-color: #187840; }
+
+        .message small { font-size: 0.8rem; color: #666; margin-top: 5px; }
+        .media { max-width: 100%; height: auto; border-radius: 10px; margin-top: 10px; }
+        video { max-width: 100%; height: auto; margin-top: 10px; }
+/* Navbar */
+.navbar-nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 15px;
+    background-color: #ffffff83; /* Restored original semi-transparent background */
+    border-radius: 6px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.navbar-nav .nav-link {
+    color: #23653a !important;
+    font-weight: 600;
+    font-size: 20px;
+    text-transform: uppercase;
+    padding: 12px 20px;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out, transform 0.3s;
+}
+
+.navbar-nav .nav-link:hover {
+    color: green !important;
+    transform: scale(1.05);
+}
+    </style>
+</head>
+<header class="header_section">
+    <nav>
+        <div class="navbar-nav">
+                              {% if request.session.email %}
+                  <a  class="nav-link" href="/profhome/">Home</a>
+                {% else %}
+                  <a  class="nav-link" href="/userHome/">Home</a>
+                {% endif %}
+                    <a class="nav-link" href="/community/">Community</a> 
+                    <a class="nav-link" href="/chat/">Back to ChatRoom</a>
+        
+          </div>
+        </div>
+    </nav>
+</header>
+    </div>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>Chat with {{ receiver }}</h2>
+
+                <!-- {% if user_type == 'artist' %}
+                    {{ receiver.first_name }}   First Name for user_reg 
+                {% else %}
+                    {{ receiver.fname }}   Fname for prof_reg 
+                {% endif %} -->
+            
+        </div>
+        <div class="messages" id="messages">
+            {% for message in messages %}
+                {% if sender.username == message.sender or sender.first_name == message.sender or sender.fname == message.sender %}
+                    <div class="message sent">
+                {% else %}
+                    <div class="message received">
+                {% endif %}
+                    <p>{{ message.content }}</p>
+                    <small>{{ message.timestamp }}</small>
+
+                    {% if message.media %}
+                        {% if message.media_type == 'image' %}
+                            <img src="{{ message.media.url }}" class="media" alt="Image">
+                        {% elif message.media_type == 'video' %}
+                            <video controls>
+                                <source src="{{ message.media.url }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        {% else %}
+                            <p>Unsupported media type</p>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        <form class="chat-form" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <textarea name="content" placeholder="Type a message..." rows="2"></textarea>
+            <div class="form-actions">
+                <input type="file" name="media" accept="image/*,video/*">
+                <button type="submit">Send</button>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        // Auto-scroll to bottom when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            var messagesContainer = document.getElementById('messages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        });
+    </script>
+</body>
+</html>

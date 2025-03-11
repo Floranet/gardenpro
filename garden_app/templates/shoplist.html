@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #c9f0cc;
+        }
+        .wrapper {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .shop-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .shop-card {
+            flex: 1 1 calc(33.333% - 20px);
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .shop-card:hover {
+            transform: translateY(-5px);
+        }
+        .shop-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .shop-card .content {
+            padding: 15px;
+        }
+        .shop-card .content h3 {
+            margin: 0 0 10px;
+            font-size: 1.5rem;
+            color: #333;
+        }
+        .shop-card .content p {
+            margin: 0;
+            color: #555;
+            line-height: 1.5;
+        }
+        .shop-card .content .category {
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 10px;
+        }
+        .shop-card .content .button-container {
+            margin-top: 15px;
+        }
+        .shop-card .content .button-container a {
+            text-decoration: none;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .shop-card .content .button-container a:hover {
+            background-color: #0056b3;
+        }
+
+        .footer-link {
+            display: flex;
+            justify-content: center;
+            color: #2e8b57;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px; /* Added space between links */
+            align-items: center; 
+            text-align: center; 
+        }
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Available Shops</h1>
+        <div class="shop-list">
+            {% for s in shops %}
+            <div class="shop-card">
+                <img src="{{ s.img.url }}" alt="{{ s.name }}">
+                <div class="content">
+                    <h3>{{ s.name }}</h3>
+                    <p><strong>Location:</strong> {{ s.location }}</p>
+                    <p><strong>Description:</strong> {{ s.description }}</p>
+                    <p class="category"><strong>Category:</strong> {{ s.category }}</p>
+                </div>
+                    <a class="footer-link"href="/edit_Shop/{{ s.id }}">Edit</a>
+                    <br>
+                    <a class="footer-link" href="/deleteshop/{{ s.id }}"onclick="return confirm('Are you sure you want to delete this shop?');">Delete</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

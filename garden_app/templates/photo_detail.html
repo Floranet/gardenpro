@@ -1,0 +1,480 @@
+{% extends "community.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <!-- Photo Section -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <!-- Photo and Info -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
+            <!-- Photo Column -->
+            <div class="lg:col-span-2">
+                <div class="relative">
+                    <img 
+                        src="{{ photo.image.url }}" 
+                        alt="{{ photo.title }}"
+                        class="w-full h-auto rounded-lg"
+                    >
+                </div>
+
+                <!-- Photo Info -->
+                <div class="mt-4">
+                    <h1 class="text-2xl font-bold text-gray-900">{{ photo.title }}</h1>
+                    <div class="flex items-center mt-2 text-gray-600 text-sm">
+                        <span>{{ photo.views }} views</span>
+                        <span class="mx-2">•</span>
+                        <span>{{ photo.created_at|date:"F j, Y" }}</span>
+                    </div>
+                </div>
+
+                <!-- Photographer Info -->
+                <div class="flex items-center mt-4 pb-4 border-b">
+                    {% if photo.user.pic %}
+                        <img src="{{ photo.user.pic.url }}" alt="{{ photo.user.email }}" 
+                             class="w-10 h-10 rounded-full">
+                    {% else %}
+                        <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
+                            <span class="text-xl text-gray-600">{{ photo.user.email|first }}</span>
+                        </div>
+                    {% endif %}
+                    <div class="ml-3">
+                        <p class="font-semibold text-gray-900">{{ photo.user.email }}</p>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="mt-4 text-gray-700">
+                    <p>{{ photo.description|linebreaks }}</p>
+                </div>
+            </div>
+
+            <!-- Actions Column -->
+            <div class="space-y-6">
+                <!-- Like/Dislike Section -->
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <div class="flex space-x-6 justify-center">
+                        <button id="likeBtn" class="flex flex-col items-center group" data-action="like">
+                            <svg class="w-8 h-8 {% if user_like and user_like.is_like %}text-blue-600{% else %}text-gray-500{% endif %} group-hover:text-blue-600" 
+                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
+                            </svg>
+                            <span class="mt-1 text-sm" id="likeCount">{{ photo.like_count }}</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Share Section -->
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold mb-4 text-center">Share</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <a href="https://api.whatsapp.com/send?text={{ request.build_absolute_uri }}" 
+                           target="_blank" 
+                           class="flex items-center justify-center space-x-2 p-2 rounded-lg bg-green-500 text-white hover:bg-green-600"
+                           onclick="sharePhoto('WA')">
+                            <span>WhatsApp</span>
+                        </a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" 
+                           target="_blank"
+                           class="flex items-center justify-center space-x-2 p-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+                           onclick="sharePhoto('FB')">
+                            <span>Facebook</span>
+                        </a>
+                        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}" 
+                           target="_blank"
+                           class="flex items-center justify-center space-x-2 p-2 rounded-lg bg-blue-400 text-white hover:bg-blue-500"
+                           onclick="sharePhoto('TW')">
+                            <span>Twitter</span>
+                        </a>
+                        <a href="mailto:?subject={{ photo.title }}&body={{ request.build_absolute_uri }}" 
+                           class="flex items-center justify-center space-x-2 p-2 rounded-lg bg-gray-600 text-white hover:bg-gray-700"
+                           onclick="sharePhoto('EM')">
+                            <span>Email</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="mt-8 bg-white rounded-lg shadow-lg p-6">
+        <h3 class="text-xl font-bold mb-6">Comments ({{ photo.comment_count }})</h3>
+        
+        <!-- Comment Form -->
+        <form id="commentForm" class="mb-8">
+            {% csrf_token %}
+            <div class="space-y-4">
+                <textarea 
+                    name="text" 
+                    rows="3" 
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                    placeholder="Add a public comment..."
+                ></textarea>
+                <div class="flex justify-end space-x-3">
+                    <button type="button" onclick="resetForm()" 
+                            class="px-4 py-2 text-gray-600 hover:text-gray-800">
+                        Cancel
+                    </button>
+                    <button type="submit" 
+                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                            disabled>
+                        Comment
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Comments List -->
+        <div id="commentsList" class="space-y-6">
+            {% for comment in comments %}
+            <div class="comment-container" id="comment-{{ comment.id }}">
+                <!-- Main comment -->
+                <div class="flex space-x-3">
+                    {% if comment.user.pic %}
+                        <img src="{{ comment.user.pic.url }}" alt="" class="w-10 h-10 rounded-full">
+                    {% else %}
+                        <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
+                            <span class="text-xl text-gray-600">{{ comment.user.email|first }}</span>
+                        </div>
+                    {% endif %}
+                    <div class="flex-1">
+                        <div class="flex items-center mb-1">
+                            <span class="font-medium text-gray-900">{{ comment.user.email }}</span>
+                            <span class="mx-2 text-gray-500">•</span>
+                            <span class="text-gray-500 text-sm">{{ comment.created_at|date:"F j, Y" }}</span>
+                        </div>
+                        <p class="text-gray-700">{{ comment.text }}</p>
+                        <div class="mt-2 flex items-center space-x-4">
+                            <button class="text-sm text-gray-500 hover:text-gray-700" 
+                                    onclick="showReplyForm('{{ comment.id }}')">
+                                Reply
+                            </button>
+                            {% if comment.user.email == request.session.email %}
+                            <button class="text-sm text-red-500 hover:text-red-700" 
+                                    onclick="deleteComment('{{ comment.id }}')">
+                                Delete
+                            </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reply Form -->
+                <div id="replyForm-{{ comment.id }}" class="hidden mt-4 ml-13">
+                    <form onsubmit="submitReply(event, '{{ comment.id }}')" class="space-y-3">
+                        {% csrf_token %}
+                        <textarea 
+                            name="text" 
+                            rows="2" 
+                            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                            placeholder="Add a reply..."
+                        ></textarea>
+                        <div class="flex justify-end space-x-3">
+                            <button type="button" 
+                                    onclick="hideReplyForm('{{ comment.id }}')" 
+                                    class="px-3 py-1 text-gray-600 hover:text-gray-800">
+                                Cancel
+                            </button>
+                            <button type="submit" 
+                                    class="px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                Reply
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Replies Section -->
+                {% for reply in comment.comment_set.all %}
+                <div class="ml-12 mt-4 comment-container" id="comment-{{ reply.id }}">
+                    <div class="flex space-x-3">
+                        {% if reply.user.pic %}
+                            <img src="{{ reply.user.pic.url }}" alt="" class="w-8 h-8 rounded-full">
+                        {% else %}
+                            <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+                                <span class="text-lg text-gray-600">{{ reply.user.email|first }}</span>
+                            </div>
+                        {% endif %}
+                        <div class="flex-1">
+                            <div class="flex items-center mb-1">
+                                <span class="font-medium text-gray-900">{{ reply.user.email }}</span>
+                                <span class="mx-2 text-gray-500">•</span>
+                                <span class="text-gray-500 text-sm">{{ reply.created_at|date:"F j, Y" }}</span>
+                            </div>
+                            <p class="text-gray-700">{{ reply.text }}</p>
+                            {% if reply.user.id == request.session.user_id %}
+                            <div class="mt-2">
+                                <button class="text-sm text-red-500 hover:text-red-700" 
+                                        onclick="deleteComment('{{ reply.id }}')">
+                                    Delete
+                                </button>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% empty %}
+            <p class="text-gray-500 text-center">No comments yet. Be the first to comment!</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+    // Like functionality
+    async function toggleLike(isLike) {
+        try {
+            const response = await fetch("{% url 'toggle_like' photo.id %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: `is_like=${isLike}`
+            });
+
+            if (!response.ok) throw new Error('Network response was not ok');
+            
+            const data = await response.json();
+            document.getElementById('likeCount').textContent = data.like_count;
+            
+            const likeBtn = document.getElementById('likeBtn');
+            if (data.action === 'added' || data.action === 'updated') {
+                likeBtn.querySelector('svg').classList.add('text-blue-600');
+            } else {
+                likeBtn.querySelector('svg').classList.remove('text-blue-600');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Please login to like photos');
+        }
+    }
+
+    // Share functionality
+    async function sharePhoto(platform) {
+        try {
+            const response = await fetch("{% url 'share_photo' photo.id %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: `platform=${platform}`
+            });
+
+            if (!response.ok) throw new Error('Network response was not ok');
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Please login to share photos');
+        }
+    }
+
+    // Comment functionality with form management and async handlers
+    // Initialize like button
+    document.getElementById('likeBtn').addEventListener('click', () => toggleLike(true));
+
+    // Comment form handling
+    const commentForm = document.getElementById('commentForm');
+    const commentTextarea = commentForm.querySelector('textarea');
+    const submitButton = commentForm.querySelector('button[type="submit"]');
+
+    commentTextarea.addEventListener('input', function() {
+        submitButton.disabled = !this.value.trim();
+    });
+
+    commentForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        try {
+            const response = await fetch("{% url 'add_comment' photo.id %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: new URLSearchParams(new FormData(this)).toString()
+            });
+
+            const data = await response.json();
+
+            
+            if (data.comment_count !== null) {
+                document.querySelector('h3.text-xl').textContent = `Comments (${data.comment_count})`;
+            }
+            
+            // Add the new comment to the list
+            const commentsList = document.getElementById('commentsList');
+            const newCommentHtml = `
+                <div class="comment-container" id="comment-${data.comment_id}">
+                    <div class="flex space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
+                            <span class="text-xl text-gray-600">${data.username[0]}</span>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center mb-1">
+                                <span class="font-medium text-gray-900">${data.username}</span>
+                                <span class="mx-2 text-gray-500">•</span>
+                                <span class="text-gray-500 text-sm">${data.created_at}</span>
+                            </div>
+                            <p class="text-gray-700">${data.text}</p>
+                            <div class="mt-2 flex items-center space-x-4">
+                                <button class="text-sm text-gray-500 hover:text-gray-700" 
+                                        onclick="showReplyForm('${data.comment_id}')">
+                                    Reply
+                                </button>
+                                <button class="text-sm text-red-500 hover:text-red-700" 
+                                        onclick="deleteComment('${data.comment_id}')">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="replyForm-${data.comment_id}" class="hidden mt-4 ml-13">
+                        <form onsubmit="submitReply(event, '${data.comment_id}')" class="space-y-3">
+                            {% csrf_token %}
+                            <textarea 
+                                name="text" 
+                                rows="2" 
+                                class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                                placeholder="Add a reply..."
+                            ></textarea>
+                            <div class="flex justify-end space-x-3">
+                                <button type="button" 
+                                        onclick="hideReplyForm('${data.comment_id}')" 
+                                        class="px-3 py-1 text-gray-600 hover:text-gray-800">
+                                    Cancel
+                                </button>
+                                <button type="submit" 
+                                        class="px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                    Reply
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+            
+            if (commentsList.querySelector('.text-gray-500.text-center')) {
+                commentsList.innerHTML = newCommentHtml;
+            } else {
+                commentsList.insertAdjacentHTML('afterbegin', newCommentHtml);
+            }
+            
+            // Reset form
+            this.reset();
+            submitButton.disabled = true;
+            
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Please login to comment');
+        }
+    });
+
+    // Reply functionality
+    function showReplyForm(commentId) {
+        document.getElementById(`replyForm-${commentId}`).classList.remove('hidden');
+    }
+
+    function hideReplyForm(commentId) {
+        const form = document.getElementById(`replyForm-${commentId}`);
+        form.classList.add('hidden');
+        form.querySelector('textarea').value = '';
+    }
+
+    async function submitReply(event, commentId) {
+        event.preventDefault();
+        const form = event.target;
+        
+        try {
+            const response = await fetch("{% url 'add_comment' photo.id %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: new URLSearchParams(new FormData(form)).toString() + `&parent_id=${commentId}`
+            });
+    
+            const data = await response.json();
+            
+            // Add the reply to the comment
+            const parentComment = document.getElementById(`comment-${commentId}`);
+            const replyHtml = `
+                <div class="ml-12 mt-4 comment-container" id="comment-${data.comment_id}">
+                    <div class="flex space-x-3">
+                        <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+                            <span class="text-lg text-gray-600">${data.username[0]}</span>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center mb-1">
+                                <span class="font-medium text-gray-900">${data.username}</span>
+                                <span class="mx-2 text-gray-500">•</span>
+                                <span class="text-gray-500 text-sm">${data.created_at}</span>
+                            </div>
+                            <p class="text-gray-700">${data.text}</p>
+                            <div class="mt-2">
+                                <button class="text-sm text-red-500 hover:text-red-700" 
+                                        onclick="deleteComment('${data.comment_id}')">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            parentComment.insertAdjacentHTML('beforeend', replyHtml);
+            hideReplyForm(commentId);
+            
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Please login to reply');
+        }
+    }
+
+    // Delete comment functionality
+    async function deleteComment(commentId) {
+        if (!confirm('Are you sure you want to delete this comment?')) return;
+        
+        try {
+            const response = await fetch(`{% url 'delete_comment' 0 %}`.replace('0', commentId), {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            });
+
+            if (!response.ok) throw new Error('Network response was not ok');
+            
+            const data = await response.json();
+            if (data.success) {
+                document.getElementById(`comment-${commentId}`).remove();
+                if (data.comment_count !== null) {
+                    const commentHeader = document.querySelector('h3.text-xl');
+                    commentHeader.textContent = `Comments (${data.comment_count})`;
+                    
+                    // If no comments left, show the "no comments" message
+                    if (data.comment_count === 0) {
+                        const commentsList = document.getElementById('commentsList');
+                        commentsList.innerHTML = `
+                            <p class="text-gray-500 text-center">No comments yet. Be the first to comment!</p>
+                        `;
+                    }
+                }
+            }
+            
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error deleting comment');
+        }
+    }
+    function resetForm() {
+        commentForm.reset();
+        submitButton.disabled = true;
+    }
+    document.getElementById('likeBtn').addEventListener('click', () => toggleLikeDislike(true));
+    document.getElementById('dislikeBtn').addEventListener('click', () => toggleLikeDislike(false));
+</script>
+{% endblock %}

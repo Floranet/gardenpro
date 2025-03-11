@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="css/login.css">
+    <style>
+        body {
+            background-color: #5f9c6e; /* Bootstrap's primary blue color */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .login-container {
+            background-color: #ffffff; /* White background for the login box */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+        .login-container h3 {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .btn-info {
+            width: 100%;
+        }
+        .text-info {
+            color: #35a551 !important; /* Ensure text color matches the button */
+        }
+        #register-link a {
+            color: #35a551;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h3 class="text-center text-info">Login Form</h3>
+        <form id="login-form" class="form" action="/adminlogin/" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="email" class="text-info">Email:</label>
+                <input type="email" name="email" id="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="password" class="text-info">Password:</label>
+                <input type="password" name="password" id="password" class="form-control" required>
+            </div>
+            <div class="form-group form-check">
+                <input id="remember-me" name="remember-me" type="checkbox" class="form-check-input">
+                <label for="remember-me" class="form-check-label text-info">Remember me</label>
+            </div>
+            <div class="form-group">
+                <input type="submit" name="submit"  class="login-btn" value="Submit">
+            </div>
+            <div id="register-link" class="text-right">
+                <a href="/register/" class="text-info">Register here</a>
+            </div>
+        </form>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+</body>
+</html>

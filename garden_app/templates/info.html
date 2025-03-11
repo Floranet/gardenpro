@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gardening Resources</title>
+    <style>
+        /* General Container Styles */
+        .resources-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            padding: 2rem;
+            justify-content: center;
+            background-color: #c9f0cc; /* Light earthy tone */
+        }
+
+        /* Resource Card Styles */
+        .resource-card {
+            background: #ffffff; /* Card background */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            width: 300px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Resource Card Header (Image) */
+        .resource-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 3px solid #6b8e23; /* Olive green for garden theme */
+        }
+
+        /* Resource Card Content */
+        .resource-card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 200px;
+        }
+
+        .resource-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4b5320; /* Darker green for readability */
+            margin-bottom: 0.5rem;
+        }
+
+        .resource-description {
+            font-size: 0.95rem;
+            color: #555555; /* Neutral text color */
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .resource-link {
+            display: inline-block;
+            text-align: center;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #ffffff;
+            background: #6b8e23; /* Olive green */
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+
+        .resource-link:hover {
+            background: #556b2f; /* Darker green for hover effect */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .resources-container {
+                padding: 1rem;
+            }
+
+            .resource-card {
+                width: 100%;
+            }
+        }
+        .footer-link {
+            color: #2e8b57;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px; /* Added space between links */
+        }
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="resources-container">
+        <div class="resource-card">
+            <img src="gardening-tools.jpg" alt="Gardening Tools">
+            <div class="resource-card-content">
+                <div class="resource-title">Gardening Tools</div>
+                <div class="resource-description">
+                    Discover essential tools for your gardening needs, from trowels to pruning shears.
+                </div>
+                <a href="#" class="resource-link">Learn More</a>
+            </div>
+        </div>
+
+        <div class="resource-card">
+            <img src="organic-fertilizers.jpg" alt="Organic Fertilizers">
+            <div class="resource-card-content">
+                <div class="resource-title">Videos</div>
+                {% for r in res %}
+                <div class="resource-description">
+                    
+                </div>
+            </div>
+
+        <div class="resource-card">
+            <img src="plant-care.jpg" alt="Plant Care">
+            <div class="resource-card-content">
+                <div class="resource-title">Plant Care Tips</div>
+                <div class="resource-description">
+                    Tips and tricks for keeping your plants healthy and thriving all year round.
+                </div>
+                <a href="#" class="resource-link">Read More</a>
+            </div>
+        </div>
+
+        <div class="resource-card">
+            <img src="organic-fertilizers.jpg" alt="Organic Fertilizers">
+            <div class="resource-card-content">
+                <div class="resource-title">Organic Fertilizers</div>
+                <div class="resource-description">
+                    Learn about eco-friendly fertilizers to enrich your garden soil naturally.
+                </div>
+                <a href="#" class="resource-link">Explore Options</a>
+            </div>
+            <div>
+                <a class="footer-link" href="/profhome/">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback and Rating Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #c9f0cc;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .rating {
+            margin-bottom: 20px;
+        }
+        .rating input {
+            margin-right: 5px;
+        }
+        .rating label {
+            display: inline-block;
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #23653a;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #23653a;
+        }
+        .navbar-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px; /* Adjust spacing between links */
+        padding: 15px 0;
+        background-color: #f8f9fa; /* Light background for header */
+    }
+
+    .navbar-nav .nav-link {
+        color: #23653a !important; /* Ensures all links are green */
+        font-weight: 600;
+        text-transform: uppercase;
+        padding: 10px 15px;
+        transition: color 0.3s ease-in-out;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: green !important;
+    }
+    </style>
+</head>
+<body>
+    <div class="navbar-nav">
+        <div>
+            <a class="nav-link" href="/userHome/">Home</a> |
+            <a href="/userProfile/"  class="nav-link">Back</a> 
+    </div>
+    <br>
+
+    <div class="container">
+        <h1>Feedback Form</h1>
+    
+        <form action="/feedback_rate/" method="post">
+            {% csrf_token %} 
+            <label for="feedback">Your Feedback:</label>
+            <textarea id="feedback" name="feedback_text" placeholder="Write your feedback here..." required></textarea>
+
+            <div class="rating">
+                <label>Rating:</label>
+                <input type="radio" id="rating1" name="rating" value="1">
+                <label for="rating1">1</label>
+                <input type="radio" id="rating2" name="rating" value="2">
+                <label for="rating2">2</label>
+                <input type="radio" id="rating3" name="rating" value="3">
+                <label for="rating3">3</label>
+                <input type="radio" id="rating4" name="rating" value="4">
+                <label for="rating4">4</label>
+                <input type="radio" id="rating5" name="rating" value="5">
+                <label for="rating5">5</label>
+            </div>
+
+            <button type="submit">Submit Feedback</button>
+        </form>
+        <div class="navbar-nav">
+            <div>
+                <a class="nav-link" href="/userHome/">Home</a> |
+                <a href="/userProfile/"  class="nav-link">Back</a> 
+    
+        </div>
+    </div>
+    </div>
+</body>
+</html>
+

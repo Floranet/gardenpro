@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add to Cart</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://img.freepik.com/foto-gratis/herramientas-jardineria-laicos-planos-sobre-fondo-madera-espacio-copia_23-2148396901.jpg?t=st=1730033386~exp=1730036986~hmac=3d6bfd8c3bf8b22780fe4d4a0510365449111a69e6e8776cb8f0f69837baedae&w=996'); /* Soft garden background */
+            background-size: cover;
+            background-position: center;
+            color: #333;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: #ffffffe6; /* Slightly transparent white */
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 100%;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        h1 {
+            grid-column: span 2;
+            color: #4CAF50; /* Green color */
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .product-info, .customer-info {
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            position: relative;
+            overflow: hidden;
+        }
+        .product-info:before, .customer-info:before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            background: rgba(76, 175, 80, 0.1); /* Light green overlay */
+            border-radius: 10px;
+            z-index: 0;
+        }
+        .product-info > *, .customer-info > * {
+            position: relative; /* Bring content above background */
+            z-index: 1;
+        }
+        .cart-text {
+            margin: 12px 0;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+        .cart-text img {
+            margin-right: 12px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .inputFields {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #4CAF50; /* Green border */
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        .inputFields:focus {
+            border-color: #388E3C; /* Darker green for focus */
+            outline: none;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50; /* Green color */
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+            transition: background-color 0.3s, transform 0.2s;
+            font-weight: bold;
+        }
+        input[type="submit"]:hover {
+            background-color: #388E3C; /* Darker green on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+        /* Illustrations */
+        .illustration {
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            opacity: 0.1; /* Subtle illustration */
+            width: 150px;
+        }
+        /* Navigation Bar */
+        .navbar-nav {
+            position: fixed;
+            top: 10px; /* Top margin for the navbar */
+            left: 10px; /* Left margin for the navbar */
+            display: flex;
+            justify-content: space-between;
+            width: calc(100% - 20px); /* Subtract margins */
+            z-index: 100;
+        }
+
+        .navbar-nav .nav-link {
+            text-decoration: none;
+            color: #4CAF50; /* Green text color to blend with the background */
+            font-weight: bold;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center; /* Vertically align the text */
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #388E3C; /* Darker green on hover */
+        }
+
+        /* Ensure correct placement of symbols */
+        .navbar-nav .nav-link.home::before {
+            content: "<";
+            padding-right: 8px; /* Space between symbol and text */
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav .nav-link.back::after {
+            content: ">";
+            padding-left: 8px; /* Space between symbol and text */
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar-nav">
+    <a class="nav-link home" href="/userHome/">Home</a>  <!-- "Home" with "<" symbol -->
+    <a class="nav-link back" href="/user_prod/">Back</a>  <!-- "Back" without symbols -->
+</div>
+<div class="container">
+    <h1>🛒 Add to Cart</h1>
+    
+    <div class="product-info">
+        <div class="cart-text"><img src="/media/{{ j }}" width="100" height="100" alt="{{ b }}"></div>
+        <div class="cart-text"><b>Product Name:  </b> {{ b }}</div>
+        <div class="cart-text"><b>Product Type:  </b> {{ c }}</div>
+        <div class="cart-text"><b>Price:  </b> {{ e }}</div>
+        <div class="cart-text"><b>Quantity:  </b> {{ d }}</div>
+        <div class="cart-text"><b>Seller Name:  </b> {{ f }}</div>
+        <div class="cart-text"><b>Seller's Phone Number:  </b> {{ g }}</div>
+        <img src="https://example.com/path-to-your-illustration.png" alt="Garden Illustration" class="illustration"> <!-- Replace with actual illustration URL -->
+    </div>
+    
+    <div class="customer-info">
+        <h2>Customer Information</h2>
+        <form method="POST" action="/add_cart/">
+            {% csrf_token %}
+            <input type="number" name="quantity" class="inputFields" id="quantity" placeholder="Quantity" value="{{ d }}" required>
+            <input type="text" name="first_name" class="inputFields" id="first_name" placeholder="First Name" required>
+            <input type="text" name="phone" class="inputFields" id="phone" placeholder="Phone" required>
+            <input type="email" name="email" class="inputFields" id="email" placeholder="Email" required>
+
+            <!-- Hidden fields to pass the product details -->
+            <input type="hidden" name="prod_name" value="{{ b }}">
+            <input type="hidden" name="prod_type" value="{{ c }}">
+            <input type="hidden" name="price" value="{{ e }}">
+            <input type="hidden" name="seller_name" value="{{ f }}">
+            <input type="hidden" name="seller_phone" value="{{ g }}">
+            <input type="submit" id="submit" value="Add to Cart">
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

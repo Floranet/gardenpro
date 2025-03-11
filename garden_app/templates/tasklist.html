@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Task List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #c9f0cc;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2e8b57;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #e4f3e4;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+        /* Navigation Bar */
+        .navbar-nav {
+            position: fixed;
+            top: 10px; /* Top margin for the navbar */
+            left: 10px; /* Left margin for the navbar */
+            display: flex;
+            justify-content: space-between;
+            width: calc(100% - 20px); /* Subtract margins */
+            z-index: 100;
+        }
+
+        .navbar-nav .nav-link {
+            text-decoration: none;
+            color: #4CAF50; /* Green text color to blend with the background */
+            font-weight: bold;
+            padding: 10px 20px;
+            font-size: 1.8rem;
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center; /* Vertically align the text */
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #388E3C; /* Darker green on hover */
+        }
+
+        /* Ensure correct placement of symbols */
+        .navbar-nav .nav-link.back::before {
+            content: "<";
+            padding-right: 8px; /* Space between symbol and text */
+            font-size: 2rem;
+        }
+
+    </style>
+</head>
+<body>
+        <div class="navbar-nav">
+            <a class="nav-link back" href="/tools/">Back</a>  <!-- "Back" without symbols -->
+            <a href="{% if request.session.email %}/profhome/{% else %}/userHome/{% endif %}" class="nav-link home">Home</a>
+
+        </div><br>
+        <div class="container">
+        <h1>Your Tasks</h1>
+        {% if tk %}
+            <ul>
+                {% for task in tk %}
+                <li class="{% if task.status %}completed{% endif %}">
+                    <span>{{ task.title }}</span>
+                    <span>Status: {% if task.status %}Completed{% else %}Incomplete{% endif %}</span>
+                    {% if not task.status %}
+                        <a href="{% url 'complete_task' task.id %}" style="background: #2e8b57; color: white; padding: 5px 10px; border-radius: 5px; text-decoration: none;">Mark as Completed</a>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No tasks found.</p>
+        {% endif %}
+
+    </div>
+
+</body>
+</html>

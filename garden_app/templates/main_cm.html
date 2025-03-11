@@ -1,0 +1,101 @@
+{% extends "community.html" %}
+{% load static %}
+
+{% block content %}
+<section id="mainSection" class="space-y-6 p-6">
+    <!-- Search Bar -->
+    <div class="max-w-2xl mx-auto mb-8">
+        <div class="relative">
+            <input type="text" 
+                   id="searchInput" 
+                   class="w-full p-4 pr-12 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                   placeholder="Search photos..."
+                   value="{{ search_query }}">
+            <button id="searchButton" 
+                    class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Photo Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {% for photo in photos %}
+        <div class="bg-white dark:bg-gray-700 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
+            <a href="{% url 'photo_detail' photo.id %}" class="block">
+                <!-- Photo -->
+                <div class="relative pt-[100%]">
+                    <img src="{{ photo.image.url }}" 
+                         alt="{{ photo.title }}" 
+                         class="absolute top-0 left-0 w-full h-full object-cover">
+                </div>
+                
+                <!-- Photo Info -->
+                <div class="p-4">
+                    <h3 class="font-semibold text-lg mb-2 line-clamp-2 dark:text-white">{{ photo.title }}</h3>
+                    
+                    <!-- User Info -->
+                    <div class="flex items-center mb-2">
+                        <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                            <i data-feather="user" class="w-4 h-4 text-gray-600"></i>
+                        </div>
+                        <span class="text-sm text-gray-600 dark:text-gray-300">{{ photo.user.email }}</span>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="flex items-center text-sm text-green-500 dark:text-green-400 space-x-3">
+                        <span>{{ photo.views }} views</span>
+                        <span>•</span>
+                        <span>{{ photo.like_count }} likes</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% empty %}
+        <div class="col-span-full text-center py-12 text-gray-500 dark:text-gray-400">
+            No photos found
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if photos.has_other_pages %}
+    <div class="flex justify-center mt-8 space-x-4">
+        {% if photos.has_previous %}
+            <a href="?page={{ photos.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" 
+               class="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">Previous</a>
+        {% endif %}
+        
+        {% if photos.has_next %}
+            <a href="?page={{ photos.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" 
+               class="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">Next</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const searchButton = document.getElementById('searchButton');
+
+    function performSearch() {
+        const query = searchInput.value.trim();
+        const currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.set('search', query);
+        currentUrl.searchParams.delete('page');
+        window.location.href = currentUrl.toString();
+    }
+
+    searchButton.addEventListener('click', performSearch);
+
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            performSearch();
+        }
+    });
+});
+</script>
+{% endblock %}
