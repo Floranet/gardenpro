@@ -817,21 +817,20 @@ If you have any queries or feedback, please send it to us.</p><br>
   </script>
   <script type="text/javascript">
 
-function fixNavbarDisplay() {
-  const navbar = document.querySelector(".navbar");
-  
-  if (window.matchMedia("(orientation: portrait)").matches) {
-    navbar.style.display = "flex"; // Make sure it's visible
-    navbar.style.visibility = "visible";
-    navbar.style.opacity = "1";
-  } else {
-    navbar.style.display = "flex"; // Keep it the same in landscape
-  }
+function fixNavbarColor() {
+  const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
+
+  navLinks.forEach((link) => {
+    link.style.color = "#23653a"; // Green color
+    link.style.fontWeight = "bold"; // Make it bold
+    link.style.fontSize = "18px"; // Adjust size
+  });
 }
 
-// Run when the page loads & on resize
-fixNavbarDisplay();
-window.addEventListener("resize", fixNavbarDisplay);
+// Run on page load and on resize
+document.addEventListener("DOMContentLoaded", fixNavbarColor);
+window.addEventListener("resize", fixNavbarColor);
+
 
 
 
