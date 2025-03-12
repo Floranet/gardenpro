@@ -51,6 +51,14 @@ h1 {
 }
 
 @media screen and (orientation: portrait) {
+
+  .navbar {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+  }
+
   .navbar-nav {
     display: flex;
     align-items: center;
@@ -809,11 +817,23 @@ If you have any queries or feedback, please send it to us.</p><br>
   </script>
   <script type="text/javascript">
 
-document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
-    link.style.color = "#23653a";
-    link.addEventListener("mouseover", () => link.style.color = "green");
-    link.addEventListener("mouseout", () => link.style.color = "#23653a");
-});
+function fixNavbarDisplay() {
+  const navbar = document.querySelector(".navbar");
+  
+  if (window.matchMedia("(orientation: portrait)").matches) {
+    navbar.style.display = "flex"; // Make sure it's visible
+    navbar.style.visibility = "visible";
+    navbar.style.opacity = "1";
+  } else {
+    navbar.style.display = "flex"; // Keep it the same in landscape
+  }
+}
+
+// Run when the page loads & on resize
+fixNavbarDisplay();
+window.addEventListener("resize", fixNavbarDisplay);
+
+
 
 
 
