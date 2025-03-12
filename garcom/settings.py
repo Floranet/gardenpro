@@ -26,12 +26,12 @@ SECRET_KEY = 'django-insecure-^j%2$8aor*=5-mu&xq+jpx*h0rwt9o9q9m8ut6riuau%9plj1r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['floranet-y0p8.onrender.com', 'localhost', '127.0.0.1']
 
 # Security Improvements
 SECURE_SSL_REDIRECT = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http')
-SECURE_HSTS_SECONDS = 0  # Disable HSTS in development
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_HSTS_SECONDS = 3600
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
