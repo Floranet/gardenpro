@@ -30,41 +30,6 @@ h1 {
     margin: 0;
 }
 
-.navbar {
-    background-color: rgba(56, 142, 60, 0.9); /* Semi-transparent green background */
-    color: white;
-    padding: 15px 20px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    backdrop-filter: blur(5px); /* Add a blur effect to enhance visibility */
-}
-
-.navbar-nav {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.navbar-nav .nav-link {
-    color: white; /* Make links stand out with a white color */
-    font-weight: 600;
-    text-transform: uppercase;
-    padding: 10px 15px;
-    transition: color 0.3s ease-in-out;
-    text-decoration: none;
-}
-
-.navbar-nav .nav-link:hover {
-    color: #a5d6a7; /* A lighter green for hover effect */
-}
-
-.navbar-nav .nav-link:last-child {
-    color: white;
-}
 
 /* Slider Section */
 .slider_section {
@@ -85,9 +50,7 @@ h1 {
     display: block;
 }
 
-/* Media Query for Portrait Mode */
-@media screen and (orientation: portrait) {
-  .navbar-nav {
+.navbar-nav {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -116,14 +79,6 @@ h1 {
   justify-content: center;
   min-height: 100vh; /* Ensures full viewport height */
   padding: 50px 0; /* Adds spacing without breaking layout */
-}
-
-
-    h1 {
-        font-size: 4rem !important; /* Adjust font size for portrait */
-    }
-
-
 }
 
 </style>  
@@ -204,7 +159,7 @@ h1 {
                 <a class="nav-link" href="contact.html">Contact us</a>
               </li> -->
             </ul>
-            <div class="user_option">
+            <!-- <div class="user_option">
               <a href="">
                 <img src="{% static 'images/user.png' %}" alt="">
                 <span>
@@ -214,7 +169,7 @@ h1 {
               <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
                 <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
               </form>
-            </div>
+            </div> -->
           <!-- </div> -->
           <div>
             <div class="custom_menu-btn ">
