@@ -31,14 +31,14 @@ h1 {
 }
 
 
-/* Slider Section */
+/* Slider Section
 .slider_section {
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     padding: 50px 0;
-}
+} */
 
 .detail-box {
     text-align: left;
@@ -50,57 +50,49 @@ h1 {
     display: block;
 }
 
-/* Media Query for Portrait Mode */
 @media screen and (orientation: portrait) {
   .navbar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .navbar-nav .nav-link {
+    color: #23653a !important; 
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 10px 15px;
+    transition: color 0.3s ease-in-out;
+  }
+
+  .navbar-nav .nav-link:hover {
+    color: green !important;
+  }
+
+  a {
     color: #23653a !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px; /* Adjust spacing between links */
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: green !important;
+  }
+
+  .slider_section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 50px 0;
+  }
+
+  h1 {
+    font-size: 4rem !important;
+    color: #23653a !important;
+  }
 }
 
-.navbar-nav .nav-link {
-  color: #23653a !important; /* Ensures all links are black */
-  font-weight: 600; /* Slightly bold for better visibility */
-  text-transform: uppercase; /* Consistent styling */
-  padding: 10px 15px; /* Proper padding */
-  transition: color 0.3s ease-in-out; /* Smooth color change */
-}
-
-.navbar-nav .nav-link:hover {
-  color: green !important; /* Highlight effect */
-}
-
-.navbar-nav .nav-link:last-child {
-  color: #23653a !important; /* Ensures "Log Out" is not blue */
-}
-
-.slider_section {
-  color: #23653a !important;
-  display: flex;
-  align-items: center; /* Centers content vertically */
-  justify-content: center;
-  min-height: 100vh; /* Ensures full viewport height */
-  padding: 50px 0; /* Adds spacing without breaking layout */
-}
-
-a {
-  color: #23653a !important;
-  text-decoration: none;
-}
-
-a:hover {
-  color: green !important;
-}
-
-    h1 {
-        font-size: 4rem !important;
-        color: #23653a !important; /* Adjust font size for portrait */
-    }
-
-
-}
 
 </style>  
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
