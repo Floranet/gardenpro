@@ -808,6 +808,15 @@ If you have any queries or feedback, please send it to us.</p><br>
   <script type="text/javascript" src="{% static 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js' %}">
   </script>
   <script type="text/javascript">
+
+document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+    link.style.color = "#23653a";
+    link.addEventListener("mouseover", () => link.style.color = "green");
+    link.addEventListener("mouseout", () => link.style.color = "#23653a");
+});
+
+
+
     $(".owl-carousel").owlCarousel({
       loop: true,
       margin: 10,
@@ -828,8 +837,7 @@ If you have any queries or feedback, please send it to us.</p><br>
       }
 
     });
-  </script>
-  <script>
+  
     var nav = $("#navbarSupportedContent");
     var btn = $(".custom_menu-btn");
     btn.click
@@ -839,8 +847,8 @@ If you have any queries or feedback, please send it to us.</p><br>
       nav.toggleClass("lg_nav-toggle");
       document.querySelector(".custom_menu-btn").classList.toggle("menu_btn-style")
     });
-  </script>
-  <script>
+
+
     $('.carousel').on('slid.bs.carousel', function () {
       $(".indicator-2 li").removeClass("active");
       indicators = $(".carousel-indicators li.active").data("slide-to");
@@ -848,6 +856,9 @@ If you have any queries or feedback, please send it to us.</p><br>
       console.log(indicators);
 
     })
+
+
+
   </script>
 
 </body>
