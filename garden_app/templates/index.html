@@ -50,7 +50,9 @@ h1 {
     display: block;
 }
 
-.navbar-nav {
+/* Media Query for Portrait Mode */
+@media screen and (orientation: portrait) {
+  .navbar-nav {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,6 +81,14 @@ h1 {
   justify-content: center;
   min-height: 100vh; /* Ensures full viewport height */
   padding: 50px 0; /* Adds spacing without breaking layout */
+}
+
+
+    h1 {
+        font-size: 4rem !important; /* Adjust font size for portrait */
+    }
+
+
 }
 
 </style>  
