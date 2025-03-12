@@ -15,102 +15,117 @@
 
   <title>FloraNet</title>
 <style>
-  /* General Styles */
-  body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-  }
-  
-  h1 {
-      font-size: 6rem !important; /* Set font size to 6rem */
-      font-family: 'Georgia', serif;
-      color: #388e3c;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-      margin: 0;
-  }
-  
-  .navbar {
-      background-color: #f8f9fa;
-      padding: 15px 20px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-  }
-  
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 6rem !important; /* Set font size to 6rem */
+    font-family: 'Georgia', serif;
+    color: #388e3c;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    margin: 0;
+}
+
+.navbar {
+    background-color: rgba(56, 142, 60, 0.9); /* Semi-transparent green background */
+    color: white;
+    padding: 15px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(5px); /* Add a blur effect to enhance visibility */
+}
+
+.navbar-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-nav .nav-link {
+    color: white; /* Make links stand out with a white color */
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 10px 15px;
+    transition: color 0.3s ease-in-out;
+    text-decoration: none;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #a5d6a7; /* A lighter green for hover effect */
+}
+
+.navbar-nav .nav-link:last-child {
+    color: white;
+}
+
+/* Slider Section */
+.slider_section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 50px 0;
+}
+
+.detail-box {
+    text-align: left;
+}
+
+.img-box img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Media Query for Portrait Mode */
+@media screen and (orientation: portrait) {
   .navbar-nav {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-  }
-  
-  .navbar-nav .nav-link {
-      color: #23653a;
-      font-weight: 600;
-      text-transform: uppercase;
-      padding: 10px 15px;
-      transition: color 0.3s ease-in-out;
-      text-decoration: none;
-  }
-  
-  .navbar-nav .nav-link:hover {
-      color: green;
-  }
-  
-  .navbar-nav .nav-link:last-child {
-      color: #23653a;
-  }
-  
-  /* Slider Section */
-  .slider_section {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 50px 0;
-  }
-  
-  .detail-box {
-      text-align: left;
-  }
-  
-  .img-box img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-  }
-  
-  /* Media Query for Portrait Mode */
-  @media screen and (orientation: portrait) {
-      .navbar-nav {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 15px; /* Adjust spacing between links */
-          flex-direction: column;
-          text-align: center;
-      }
-  
-      .navbar-nav .nav-link {
-          font-size: 1.2rem; /* Adjust font size for better fit */
-          padding: 8px 12px; /* Adjust padding */
-      }
-  
-      h1 {
-          font-size: 4rem !important; /* Adjust font size for portrait */
-      }
-  
-      .slider_section {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          min-height: 60vh; /* Adjust height to avoid overcrowding */
-          padding: 50px 0;
-      }
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px; /* Adjust spacing between links */
+}
+
+.navbar-nav .nav-link {
+  color: #23653a !important; /* Ensures all links are black */
+  font-weight: 600; /* Slightly bold for better visibility */
+  text-transform: uppercase; /* Consistent styling */
+  padding: 10px 15px; /* Proper padding */
+  transition: color 0.3s ease-in-out; /* Smooth color change */
+}
+
+.navbar-nav .nav-link:hover {
+  color: green !important; /* Highlight effect */
+}
+
+.navbar-nav .nav-link:last-child {
+  color: #23653a !important; /* Ensures "Log Out" is not blue */
+}
+
+.slider_section {
+  display: flex;
+  align-items: center; /* Centers content vertically */
+  justify-content: center;
+  min-height: 100vh; /* Ensures full viewport height */
+  padding: 50px 0; /* Adds spacing without breaking layout */
+}
+
+
+    h1 {
+        font-size: 4rem !important; /* Adjust font size for portrait */
+    }
+
+
+}
+
 </style>  
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
